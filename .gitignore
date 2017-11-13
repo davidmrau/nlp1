@@ -1,0 +1,14 @@
+## latex generated files:
+*.aux
+*.log
+*.bbl
+*.blg
+report/*.pdf
+*.ps
+*.eps
+*.out
+*.dvi
+
+## python
+__pycache__/
+*.pt
