@@ -12,3 +12,6 @@ report/*.pdf
 ## python
 __pycache__/
 *.pt
+
+## data
+*.tagged
