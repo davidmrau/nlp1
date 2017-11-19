@@ -24,8 +24,8 @@ __Remark__: the directory experiments misses the files _model.pt_ (too large) an
   
 * Tasks that can be picked up
   * Write Background section 
-  * Write Related Work section, summary Linzen paper (MJ)  
-  * Notes about the research idea we came up with
+  * Write Related Work section, summary Linzen paper (MdJ)  
+  * Notes about the research idea we came up with (MdJ)
   
   
 
