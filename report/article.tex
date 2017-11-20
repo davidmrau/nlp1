@@ -19,9 +19,8 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[twoside]{article}
-
+\usepackage{graphics, graphicx}
 \usepackage{lipsum} % Package to generate dummy text throughout this template
-
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \linespread{1.05} % Line spacing - Palatino needs more space between lines
@@ -36,7 +35,7 @@
 
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
-
+\usepackage{subcaption}
 \usepackage{abstract} % Allows abstract customization
 \renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
 \renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
@@ -51,7 +50,6 @@
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{Running title } % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 %----------------------------------------------------------------------------------------
@@ -63,30 +61,13 @@
 
 \author{
 \large
-\textsc{Maartje de Jonge} %\thanks{A thank you or further information}\\[2mm] % Your name
+\textsc{David Rau (11725148), Jer\^ome Mutgeert (....)},Maartje de Jonge (.....) \\[2mm] % Your name
 \normalsize University of Amsterdam \\ % Your institution
-%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
-%\normalsize 194107 % Your email address
+\normalsize \href{mailto:david.rau@student.uva.nl, ...,...}{david.rau@student.uva.nl, ..., ...} % Your email address
 \vspace{-5mm}
-\and
-\large
-\textsc{David Rau} %\thanks{A thank you or further information}\\[2mm] % Your name
-\normalsize University of Amsterdam \\ % Your institution
-%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
-%\normalsize <st nr> % Your email address
-\and
-\vspace{-5mm}
-\large
-\textsc{Jer\^ome Mutgeert} %\thanks{A thank you or further information}\\[2mm] % Your name
-\normalsize University of Amsterdam \\ % Your institution
-%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
-%\normalsize <st nr> % Your email address
-%\vspace{-5mm}
 }
-
-
-
 \date{}
+
 
 %----------------------------------------------------------------------------------------
 
@@ -168,6 +149,29 @@ The remainder of this report is organized as follows \ldots
 \label{replication}
 
 - We replicate some experiments from ~\cite{Linzen2016} with our own language model \ldots
+
+
+
+\end{multicols}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+    \caption{}
+        \includegraphics[width=\textwidth]{2b.pdf}
+        \label{fig:2b}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.4\textwidth}
+    	\caption{}
+        \includegraphics[width=\textwidth]{2c.pdf}
+        \label{fig:2c}
+    \end{subfigure}
+    \caption{Error rates of the Language Model plotted against: \ref{fig:2b} presence and number of last attractor; \ref{fig:2c} count of attractors in dependencies with homogeneous intervention}
+\end{figure}
+
+\begin{multicols}{2}
 
 \subsection{Own Experiments}
 \label{own-experiments}
