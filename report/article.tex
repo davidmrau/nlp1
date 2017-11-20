@@ -33,6 +33,9 @@
 \usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
 \usepackage{hyperref} % For hyperlinks in the PDF
 
+
+\bibliographystyle{plainnat}
+\usepackage{natbib}
 \usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
 \usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
 \usepackage{subcaption}
@@ -132,7 +135,7 @@ The remainder of this report is organized as follows \ldots
 \section{Previous Work}
 \label{previous work}
 
-- summary of ~\cite{Linzen2016}
+- summary of ~\citep{Linzen2016}
 
 \input{problem}
 
@@ -143,15 +146,27 @@ The remainder of this report is organized as follows \ldots
 \section{Experiments}
 \label{experiments}
 
-- Our model:
+\textbf{Data:} 
+The language model was tested on sentences that were generated from the Wall Street Journal section of the Penn Treebank \citep{Marcus1993}. Therefore, 40 nouns and verbs, that were amongst the most common and occur in the test corpus as well as in language model's corpus, were extracted. Those words build the base for the sentence generation for the subsequent experiments. 
+
+\textbf{Model evaluation:} In order to evaluate the performance of our model, we query it with the sentence containing both, the plural (\ref{sent:right}) and the singular (\ref{sent:wrong}) mode of the verb: 
+
+\begin{equation}
+	\label{sent:right}
+	\textnormal{the producer plan}
+\end{equation}
+\begin{equation}
+	\label{sent:wrong}
+	\textnormal{the producer \textbf{plans}}
+\end{equation}
+
+The model provides probabilities for both sentences. We choose the sentence with the higher probability and compare whether is matches the correct solution (\ref{sent:right}).
 
 \subsection{Replication Linzen 2016}
 \label{replication}
+According to \citep{Linzen2016} we first examine the models the error rate predicting the number of the verb in a sentence when nouns intervene between the subject and the verb. 
 
-- We replicate some experiments from ~\cite{Linzen2016} with our own language model \ldots
-
-
-
+First, we test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last attractor in the sentence.
 \end{multicols}
 
 \begin{figure}
@@ -168,7 +183,7 @@ The remainder of this report is organized as follows \ldots
         \includegraphics[width=\textwidth]{2c.pdf}
         \label{fig:2c}
     \end{subfigure}
-    \caption{Error rates of the Language Model plotted against: \ref{fig:2b} presence and number of last attractor; \ref{fig:2c} count of attractors in dependencies with homogeneous intervention}
+    \caption{Error rates of the language model plotted against: \ref{fig:2b} presence and number of last attractor; \ref{fig:2c} count of attractors in dependencies with homogeneous intervention}
 \end{figure}
 
 \begin{multicols}{2}
