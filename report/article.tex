@@ -157,13 +157,15 @@ The language model was tested on sentences that were generated from the Wall Str
 	\textnormal{the producer \textbf{plans}}
 \end{equation}
 
-The model provides probabilities for both sentences. We choose the sentence with the higher probability and compare whether is matches the correct solution (\ref{sent:right}).
+The model provides probabilities for both sentences. We choose the sentence with the higher probability and compare whether it matches the correct solution (\ref{sent:right}).
 
 \subsection{Replication Linzen 2016}
 \label{replication}
-According to \citep{Linzen2016} we first examine the models the error rate predicting the number of the verb in a sentence when nouns intervene between the subject and the verb. 
+According to the experiments in \citep{Linzen2016} we examine the models error rate predicting the number of a verb in a sentence when nouns intervene between the subject and the verb. 
 
 First, we test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last attractor in the sentence.
+
+As depicted in Figure \ref{fig:2b} our model performs slightly better for plural subjects (18.7\% error rate) than for singular (14,1\% error rate) when no attractors are present in the sentence. An intervening noun with the same number as the subject causes a decrease of the error rate to 18.1\% and 13.3\%, respectively. Surprisingly, when the number of the subject differs from the intervening noun the error rates increased dramatically; in singular subjects to 62,3\% in plural subjects to 59,0\%.
 \end{multicols}
 
 \begin{figure}
