@@ -4,30 +4,66 @@
 %summary of ~\citep{Linzen2016}
 
 %Linzen 2016
+Our work builds on the results described in ~\citep{Linzen2016}. In this section 
+we summarize this paper. 
 
 %%%% Research Question
-LSTM
-- can capture long distance statistical regularities
-- do not explicitly incorporate syntactic structure
-- question: can LSTM capture dependencies that follow from syntactic structure, from a corpus without syntactic annotations?
-- more specific: investigate number agreement in English subject-verb dependencies
-as an example of a structure sensitive dependency
+LSTMs are sequence models that can capture long distance statistical regularities,
+but do not have built-in hierarchical representations.
+In ~\citep{Linzen2016} Linzen et al. investigate whether LSTMs are able to capture
+dependencies that follow from syntactic structure. More specific,
+the paper investigates number agreement in English subject-verb dependencies
+as an example of a structure sensitive dependency.
+The LSTMs are trained on a corpus without syntactic annotations (Wikipedia).
+
+
+%LSTMs
+%- can capture long distance statistical regularities
+%- do not explicitly incorporate syntactic structure
+%- question: can LSTM capture dependencies that follow from syntactic structure, from a %corpus without syntactic annotations?
+%- more specific: investigate number agreement in English subject-verb dependencies
+%as an example of a structure sensitive dependency
 
 %%%% Experiments
-- train models with different training objectives
-  - with explicit grammatical target as training objective
-    - number prediction
-    - verb infliction
-    - grammatical judgement
-  - a more generic language model with the objective to predict the next word
-- corpus: wikipedia
+The paper compares the performance of models
+with an explicit grammatical target as training objective,
+as well as a more generic language model with the target to
+predict the last word. 
+The models are evaluated on real sentences, 
+that were sampled based on their grammatical complexity. 
 
-- evaluate how these models perform on simple and more complex sentences:
-  - simple cases: noun that is the subject closeby verb, no intervening nouns
-  - effect of long distance: lot of words inbetween noun and verb
-  - complex cases: intervening nouns with different number inbetween head of subject noun and verb
+%- train models with different training objectives
+%  - with explicit grammatical target as training objective
+%    - number prediction
+%    - verb infliction
+%    - grammatical judgement
+%  - a more generic language model with the objective to predict the next word
+%- corpus: wikipedia
+
+%- evaluate how these models perform on simple and more complex sentences:
+%  - simple cases: noun that is the subject closeby verb, no intervening nouns
+%  - effect of long distance: lot of words inbetween noun and verb
+%  - complex cases: intervening nouns with different number inbetween head of subject noun %and verb
   
 %%%% Results
+All models achieved an overall error rate below 7\%. However,
+the explicitly trained models perform much better (0.8\% - 2,5\%)
+compared to the language model (6.8\%). 
+The overall high accuracy for all models can be explained by
+the fact that most naturally occurring sentences are actually
+simple (no intervening nouns between verb and subject).
+The differences between the models become more pronounced,
+when evaluating them on grammatically complex sentences.
+While the performance of the grammatically trained models
+degrades slowly, achieving error rates below 20\% even with
+four intervening nouns of opposite number;
+the language model at the other hand does worst-than-change
+on most complex cases. The worst-than-change performance
+indicates that the intevening nouns actively confuse
+the model. 
+
+%%%%%%%%% Language model
+
 - high or reasonable overall accuracy for all models, explained by the fact that most real world sentences are actually simple (no attractors)
    - NP, VI, GJ, LM
 - all explicitly trained language models perform reasonable on complex cases.
