@@ -14,7 +14,6 @@ In ~\citep{Linzen2016} Linzen et al. investigate whether LSTMs are able to captu
 dependencies that follow from syntactic structure. More specific,
 the paper investigates number agreement in English subject-verb dependencies
 as an example of a structure sensitive dependency.
-The LSTMs are trained on a corpus without syntactic annotations (Wikipedia).
 
 
 %LSTMs
@@ -25,11 +24,12 @@ The LSTMs are trained on a corpus without syntactic annotations (Wikipedia).
 %as an example of a structure sensitive dependency
 
 %%%% Experiments
-The paper compares the performance of models
-with an explicit grammatical target as training objective,
-as well as a more generic language model with the target to
-predict the last word. 
-The models are evaluated on real sentences, 
+The paper compares the performance of LSTMs
+trained with an explicit grammatical target as training objective,
+as well as a more generic language model trained with the target to
+predict the next word. 
+The models are trained on a corpus without syntactic annotations (Wikipedia).
+The models are evaluated on real sentences taken from this corpus
 that were sampled based on their grammatical complexity. 
 
 %- train models with different training objectives
@@ -52,6 +52,7 @@ compared to the language model (6.8\%).
 The overall high accuracy for all models can be explained by
 the fact that most naturally occurring sentences are actually
 simple (no intervening nouns between verb and subject).
+
 The differences between the models become more pronounced,
 when evaluating them on grammatically complex sentences.
 While the performance of the grammatically trained models
