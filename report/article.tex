@@ -144,18 +144,21 @@ The remainder of this report is organized as follows \ldots
 \label{experiments}
 
 \textbf{Data:} 
-The language model was tested on sentences that were generated from the Wall Street Journal section of the Penn Treebank \citep{Marcus1993}. Therefore, 40 nouns and verbs, that were amongst the most common and occur in the test corpus as well as in language model's corpus, were extracted. Those words build the base for the sentence generation for the subsequent experiments. 
+The language model was tested on lower case sentences that were generated from the Wall Street Journal section of the Penn Treebank \citep{Marcus1993}. Therefore, 40 nouns and verbs, that were amongst the most common and occur in the test corpus as well as in language model's corpus, were extracted. Those words build the base for the sentence generation for the subsequent experiments. 
 
-\textbf{Model evaluation:} In order to evaluate the performance of our model, we query it with the sentence containing both, the plural (\ref{sent:right}) and the singular (\ref{sent:wrong}) mode of the verb: 
+\textbf{Model evaluation:} In order to evaluate the performance of our model, we query it with the sentence containing both, the plural (\ref{sent:wrong}) and the singular (\ref{sent:right}) mode of the verb: 
 
 \begin{equation}
-	\label{sent:right}
+	\label{sent:wrong}
 	\textnormal{the producer plan}
 \end{equation}
 \begin{equation}
-	\label{sent:wrong}
-	\textnormal{the producer \textbf{plans}}
+	\label{sent:right}
+	\textnormal{the producer  \textbf{plans}}
 \end{equation}
+
+
+
 
 The model provides probabilities for both sentences. We choose the sentence with the higher probability and compare whether it matches the correct solution (\ref{sent:right}).
 
@@ -163,9 +166,21 @@ The model provides probabilities for both sentences. We choose the sentence with
 \label{replication}
 According to the experiments in \citep{Linzen2016} we examine the models error rate predicting the number of a verb in a sentence when nouns intervene between the subject and the verb. 
 
-First, we test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last attractor in the sentence.
+We next test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last attractor in the sentence.
 
 As depicted in Figure \ref{fig:2b} our model performs slightly better for plural subjects (18.7\% error rate) than for singular (14,1\% error rate) when no attractors are present in the sentence. An intervening noun with the same number as the subject causes a decrease of the error rate to 18.1\% and 13.3\%, respectively. Surprisingly, when the number of the subject differs from the intervening noun the error rates increased dramatically; in singular subjects to 62,3\% in plural subjects to 59,0\%.
+
+In the following we examine the error rate when adding multiple attractors to the sentence. In order to avoid the model of being distracted by an intervening noun with same number as the subject we only insert nouns with the same number . \citep{Linzen2016} refer to such as  \textit{ dependencies with homogeneous intervention}. In (\ref{sent:right2}) the underlined represent homogeneous interventions, whereas in (\ref{sent:wrong2}) the number of the nouns differ. The bold words highlight the dependency between noun and corresponding verb.
+
+\begin{equation}
+	\label{sent:right2}
+	\textnormal{the \textbf{interest} in the \underline{shares} of the \underline{businesses} \textbf{rises} \dots}
+\end{equation}
+\begin{equation}
+	\label{sent:wrong2}
+	\textnormal{the \textbf{interest} in the \underline{shares} of the \textit{business} \textbf{rises} \dots}
+\end{equation}
+Figure \ref{fig:2c} shows that with an increasing number of noun interventions the error rate goes from 18.2\% (0 attractors) up to 49.6\% (4 attractors) which is close to randomly guessing the number of the verb. 
 \end{multicols}
 
 \begin{figure}
@@ -186,6 +201,8 @@ As depicted in Figure \ref{fig:2b} our model performs slightly better for plural
 \end{figure}
 
 \begin{multicols}{2}
+
+
 
 \subsection{Own Experiments}
 \label{own-experiments}
