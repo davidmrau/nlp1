@@ -3,7 +3,7 @@
 *.log
 *.bbl
 *.blg
-report/*.pdf
+report/article.pdf
 *.ps
 *.eps
 *.out
