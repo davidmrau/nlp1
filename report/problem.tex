@@ -36,8 +36,10 @@ We investigate this question (for the english language).
 First we 'strip the semantic clues' from the sentences by replacing all nouns and verbs with their pos tag, e.g ``The NNS that the NN [VBP/VBZ]''. Then we perform two experiments: 
 2a) we ask humans to decide the plurality of the verbs for a set of test sentences
 in this form. Can humans decide the plurality of a verb without knowing the meaning of the verb and the nouns?
-2b) we train a model on these kind of processed sentences with the target
-to decide the plurality of the verb.
-We then ask the model to complete the sentences of a test set in the stripped form. 
-Can the model learn to decide the plurality without knowing the meaning of
-the verb and the nouns?
+2b) we train a model on these kind of processed sentences,
+we can train a language model and/or a more specialized model trained with the target
+to decide the plurality of verbs.
+We then evaluate the model(s) on a test set in the stripped form. 
+Can the model learn to decide the plurality of a verb based on syntactic clues, without knowing the meaning of
+the verbs and the nouns?
+(remark: by removing the 'semantic noise' we make it much easier for the model to learn noun-verb dependencies based on syntax.)
