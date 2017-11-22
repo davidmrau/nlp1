@@ -156,21 +156,13 @@ The language model was tested on lower case sentences that were generated from t
 	\label{sent:right}
 	\textnormal{the producer  \textbf{plans}}
 \end{equation}
-
-
-
-
-The model provides probabilities for both sentences. We choose the sentence with the higher probability and compare whether it matches the correct solution (\ref{sent:right}).
-
-\subsection{Replication Linzen 2016}
-\label{replication}
 According to the experiments in \citep{Linzen2016} we examine the models error rate predicting the number of a verb in a sentence when nouns intervene between the subject and the verb. 
 
-We next test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last attractor in the sentence.
+We next test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. If it does so it is referred to as an\textit{agreement attractor}. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last intervening noun in the sentence.
 
-As depicted in Figure \ref{fig:2b} our model performs slightly better for plural subjects (18.7\% error rate) than for singular (14,1\% error rate) when no attractors are present in the sentence. An intervening noun with the same number as the subject causes a decrease of the error rate to 18.1\% and 13.3\%, respectively. Surprisingly, when the number of the subject differs from the intervening noun the error rates increased dramatically; in singular subjects to 62,3\% in plural subjects to 59,0\%.
+As depicted in Figure \ref{fig:2b} our model performs slightly better for plural subjects (18.7\% error rate) than for singular (14,1\% error rate) when no intervening nouns are present. An intervening noun with the same number as the subject causes a decrease of the error rate to 18.1\% and 13.3\%, respectively. Surprisingly, when the number of the subject differs from the intervening noun the error rates increased dramatically; in singular subjects to 62,3\% in plural subjects to 59,0\%.
 
-In the following we examine the error rate when adding multiple attractors to the sentence. In order to avoid the model of being distracted by an intervening noun with same number as the subject we only insert nouns with the same number . \citep{Linzen2016} refer to such as  \textit{ dependencies with homogeneous intervention}. In (\ref{sent:right2}) the underlined represent homogeneous interventions, whereas in (\ref{sent:wrong2}) the number of the nouns differ. The bold words highlight the dependency between noun and corresponding verb.
+In the following we examine the error rate when adding multiple attractors to the sentence. In order to avoid the model of being distracted by an intervening noun with same number as the subject we only insert nouns with the same number . \citep{Linzen2016} refer to such as  \textit{ dependencies with homogeneous intervention}. In (\ref{sent:right2}) the underlined represent homogeneous interventions, whereas in (\ref{sent:wrong2}) the number of the intervening nouns differ. The bold words highlight the dependency between noun and corresponding verb.
 
 \begin{equation}
 	\label{sent:right2}
@@ -197,7 +189,7 @@ Figure \ref{fig:2c} shows that with an increasing number of noun interventions t
         \includegraphics[width=\textwidth]{2c.pdf}
         \label{fig:2c}
     \end{subfigure}
-    \caption{Error rates of the language model plotted against: \ref{fig:2b} presence and number of last attractor; \ref{fig:2c} count of attractors in dependencies with homogeneous intervention}
+    \caption{Error rates of the language model plotted against: \ref{fig:2b} presence and number of last intervening noun; \ref{fig:2c} count of attractors in dependencies with homogeneous intervention}
 \end{figure}
 
 \begin{multicols}{2}
