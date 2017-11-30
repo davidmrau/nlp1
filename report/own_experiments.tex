@@ -71,24 +71,6 @@ in training data of the correct form?
 %output c: histogram with x-axis percentage of predicted form, y axis count (or percentage) of verbs that fall in this range
 output(?): a scatter plot, x-axis z-score noun vs y-axis z-score verb, color gradient is percentage of predicted verb form
 
-\subsubsection{Distance}
-
-(maybe we can just refer to the replication section)
-
-The ability of the model to track the number of a noun may degrade
-when the noun and the verb are far apart.
-Below we investigate the effect of distance on number agreement for simple,
-single noun, cases.
-
-1. TEST DATA:
-Pick the simple cases and generate multiple additional cases for each by adding 0 to n additional words (randomly picked from a set of non-nouns)
-[preferable: use real sentences of different length without attractors for this]
-
-2. EXPERIMENT:
-Evaluate how the language model performs on these sentences 
-and conclude whether or not the model is robust to distance. 
-(i.e. if it tends to predict plural verb for plural nouns even when they are far apart)
-output: line diagram with x-axis distance (number of words inbetween), y-axis error rate
  
 \subsection{Noun-Verb Agreement in Complex Cases}
 
@@ -133,22 +115,38 @@ Is this indeed the case ???
 
 We now look at semantic clues, i.e. companies
 are more likely to produce than employees.
-
+We investigate if the model is able to establish
+number agreement between the verb and the semantic related noun,
+ignoring the non-semantic related attractor noun.
+  
 1. TEST DATA:
-Find VBP-NNS (resp. VBZ-NN) pairs so that VBP and NNS (resp. VBZ and NN) frequently occur together in a sentence (example: prices stabilize).
-Now generate prefixes using an attractor template, for example: "The NNS of the [NN] ...[VBZ/VBP]",
-with NN randomly picked and VBZ created by adding an 's' (and checking if this format exists as VBZ). 
-Remark: 'frequently occur together' means: count(VBP + NNS)/count(VBP) is high.
-Remark: for proper comparison it makes sense to also create "The NNS* of the [NN] ...[VBZ/VBP]"
-with NNS* randomly picked as a baseline set.
-For example, we add "The prices of the employee ... [stabilize/stabilizes]" to our testset
-and "The companies of the employee ... [stabilize/stabilizes]" to our comparison test.
+We construct a testset (100+ sentences) consisting of pairs with singular and plural prefixes, in the following format  
+``The NN of the NNS ...[VBZ/VBP]'' and
+``The NNS of the NN ...[VBZ/VBP]'' 
+whereby the head of the subject (the first noun)
+is semantically related to the verb, while the attractor (the second noun)
+is randomly picked. An example is:
+``The prices of the employee ...[stabilizes/stabilize]'' and 
+``The price of the employees ...[stabilizes/stabilize]''.
+
+In addition we construct a comparison set consisting of the same prefixes
+(same verb and attractor noun),
+but with the difference that the first noun is also randomly picked and
+therefore most likely not semantically related. Example:
+``The newspapers of the employee ...[stabilizes/stabilize]'' and 
+``The newspaper of the employees ...[stabilizes/stabilize]''.
+
+
+Remark: the semantically related noun/verb combinations can either be manually
+chosen, or preferable, can be learned from the data by looking at verb noun combinations that 'frequently occur together'. 
+'frequently occur together' means: count(VBP + NNS)/count(VBP) is 
+relatively high.
 
 EXPERIMENT:
 Evaluate our model on the constructed testset and on the comparison set.
 If the model scores significantly better on the testset
 then it shows sensitivity to semantic clues.
 
-(remark: we can repeat the experiment with the nouns interchanged and check that we score worse now,
-e.g. "The employee that the prices ... [stabilize/stabilizes]" 
-In that case syntax and semantics are inconsistent)
+%(remark: we can repeat the experiment with the nouns interchanged and check that we %score worse now,
+%e.g. "The employee that the prices ... [stabilize/stabilizes]" 
+%In that case syntax and semantics are inconsistent)
