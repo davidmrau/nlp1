@@ -35,6 +35,8 @@ In the second sub section we investigate if our model can handle
 more complex cases with two nouns in the prefix,
 and what information it then uses to identify the head of the subject.
 
+TODO: describe model (or in previous section)
+
 \subsection{Noun-Verb Agreement in Simple Cases}
 
 
@@ -96,11 +98,21 @@ or plural(0).
   (Is ordering of columns more or less the same?)
   (does the pattern looks different now?)
   
-  
 - Optional 4:
+(might be very interesting)
+- fill the noun verb matrix with counts for co-occurence in
+sentences of the training corpus (noun before verb).
+That is a training sentence like "company ... produce .. "
+adds one to the entry at row 'company' and column 'produce'.
+We can again normalize and rescale the numbers so that
+they are between 0 and zero and plot as an image. 
+  
+- Optional 5:
 (probably not in paper)
 Show that pattern is not caused by random variations,
 i.e. random pattern looks different
+
+
 
 
 %hypothesis: the model falls back to pure frequencies of the two verb forms

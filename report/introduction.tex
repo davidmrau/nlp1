@@ -1,0 +1,86 @@
+\section{Introduction}
+- motivation
+
+- problem area
+
+- problem itself
+
+- research question
+
+- approach
+
+\paragraph{Outline}
+The remainder of this report is organized as follows \ldots
+
+=====================
+RNN
+LSTM
+language modeling, NLP
+
+sequence models
+no explicit syntactic structure
+can RNNs learn syntactic dependencies from a natural corpus?
+
+Linzen paper investigates number agreement as an example
+compares explicitly trained models and more general language model
+conclusion: explicit supervision required to learn syntactic dependencies.
+
+
+While the Linzen paper focuses on explicitly
+trained models, we further investigate a language model
+in more detail to see what information it
+actually uses to decide on the number of a predicted verb.
+We take an empirical approach;
+treat the model as a black box
+and learn about it
+by observing its behavior
+in carefully designed experiments.
+
+We first repeat the experiments from the linzen paper
+on a language model trained on PTB corpus.
+We reach similar conclusions,
+TODO: what about distance?
+While the model can establish number agreement
+for simple cases without intervening nouns,
+it fails for more complex cases scoring below average.
+
+We then take a closer look on the errors
+it made on simple cases without intervening nouns.
+By analyzing noun/verb combinations
+we identify verbs that show a strong preference for either
+one of the forms (singlar or plural),
+ignoring the count of the noun.
+In addition, we identified nouns that
+the model seems to have failed to learn or even mis-learned
+the number.
+We explained these cases by frequency statistics on the training corpus.
+
+We then look at syntactic information exposed 
+by function words such as 'that' and 'of'.
+We measure the performance of the model on 
+generated sentences constructed following a specific
+syntactic structure. 
+From this experiment we learned that
+function words can help the model to establish
+number agreement with the structurally relevant noun.
+But the evidence is very week.
+
+Thus far we looked at random generated nonsense
+sentences, ignoring the fact that sentences 
+are typically about something.
+In real world sentences some verbs 
+tend to form subject verb dependencies with certain nouns
+while other nouns do not mae sense.
+This can help the model.
+The price of the products stabilize/stabilizes.
+prices are semanticly related to stabilize,
+while products are not.
+We compare prefixes with a noun that
+is semantically related 
+compare with same prefic with noun replaced by random noun.
+to prefixes with a noun that is not.
+Does the semantic relation helps to establish
+number agreement with the relevant noun?
+
+From these experiments we conclude that
+...
