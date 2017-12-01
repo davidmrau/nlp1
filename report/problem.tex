@@ -43,3 +43,15 @@ We then evaluate the model(s) on a test set in the stripped form.
 Can the model learn to decide the plurality of a verb based on syntactic clues, without knowing the meaning of
 the verbs and the nouns?
 (remark: by removing the 'semantic noise' we make it much easier for the model to learn noun-verb dependencies based on syntax.)
+
+- trickey cases:
+* "the cat and the dog sleep/sleeps"
+* distance
+* attractors
+* NNPS British Airlines is/are 
+* Notional concord (humans, american/british): A number of cars [are]
+* whether people are afraid of spiders is an empirical question.
+* subject after verb: ..., say people how know vs says the king
+* There|EX are
+
+These may be misinterpret in testing, but also make training harder.
