@@ -120,8 +120,8 @@ i.e. random pattern looks different
 \subsection{Noun-Verb Agreement in Complex Cases}
 
 In Section \ref{replication} we analysed the performance of the model
-on complex sentences, containing one or more intervening
-nouns of opposite number (attractors).
+on complex sentences, containing one or more 
+nouns.
 The results show that the model is very
 sensitive to the most recent noun,
 performing worse-than-chance with only one single attractor
@@ -129,69 +129,108 @@ performing worse-than-chance with only one single attractor
 
 In this section we investigate whether
 syntactic and semantic information
-can help the model 
+can still help the model 
 to establish number agreement
-in case of attractors.
-We focus on sentences with exactly one attractor.
+in case of multiple nouns.
+We focus on sentences with exactly two nouns
+of opposite number.
 
 
 \subsubsection{Syntactic Information}
 
-To establish number agreement,
-the model must identify the noun that acts as the head of the subject.
-This is challenging for sentence prefixes that contain multiple nouns.
+%%%%% OBJECTIVE
 Function words such as 'that' or 'of' carry 
-important information about the syntactic structure of the sentence.
+important information about the syntactic structure of a sentence.
 In this Section we investigate if the model
 uses this information to establish number agreement
-in the case of multiple nouns.
-We limit our analysis to prefixes 
-with exactly two nouns of opposite number.
+for complex sentences.
 
+%%%% TEST DATA
 We generated sets of sentence prefixes using 
 different syntactic templates.
 An example is:
 "The [Noun1] of the [Noun2] ... [VBZ/VBP]".
 We instantiate the templates by randomly
-picking the two nouns and the verb from a set of frequently
+picking two nouns and a verb from a set of frequently
 used nouns and verbs. 
 Each combination of nouns and verbs instantiate
 two prefixes that differ by their plurality.
 For example:
 "The company of the governments ...[know/knows]"
 "The companies of the government ...[know/knows]".
-We generated 2 x 1000 sentences per template,
-for a total of 11 templates.
 %Notice that these prefixes are typically not semantically
 %meaningful since the nouns and verbs are randomly picked.
 
-The templates are defined 
+We generated 2 x 1000 sentences per template,
+for a total of 11 templates.
+The sentences for each template are constructed using the same
+noun, verb combinations.
+We defined 7 templates for which the first noun is the head of the subject,
+while 4 templates have the second noun as the head of the subject.
+The templates are shown in figure \ref{x}, respectively figure \ref{y}.
 
+%%%% EXPERIMENT:
+We evaluate how the model responds to the generated test inputs.
+That is, for each test prefix we let the model decide between 
+the singular and plural form of the given verb. 
+We measure the error rate for each template.
+However, instead of showing the error rates we
+show how much the language model tends to agree with the most recent noun.
+This correcponds to the error rate for the templates in \ref{x},
+while it corresponds to accuracy for the templates in \ref{y}.
+Showing the `last noun agreement rate' makes it easier
+to compare the behavior of the model for different templates.
 
-1. TEST DATA:
-Generate sentences using different templates, singular and plural formats:
-"The [Noun1] of the [Noun2] ..."
-"The [Noun1] and the [Noun2] ..."
-"The [Noun1] that the [Noun2] ..."
-"The [Noun1] , that the [Noun2] ..."
-"The [Noun1] the [Noun2] ..."
-...
-Discuss templates and function words.
-[Remark: pick noun/verb combinations for which the simple cases succeed?!]
+%%%% ANALYSIS:
+The results are shown in Figure \ref{z},
+using green and red colors to indicate if 
+the last noun is actually the head of the subject (green)
+or not (red). 
+%
+We see that all bars are above the 0.5 rate,
+which shows that the model is most
+likely to agree with the last noun,
+even in cases where this is syntactically incorrect. 
+%
+We also see that the red bars are slightly
+lower than the green bars on average.
+This indicates that the model still has some sensitivity
+to syntactic information that points in the direction 
+of the first noun as the head of the subject.
+%
 
-2. EXPERIMENT:
-Evaluate how much the language model tends to agree with the last noun 
-(correct for some templates, erroneous for others)
-output: bar chart with template-id on x axis, percentage of agreement
-with last noun on y axis, color green if correct, color red if erroneous.  
+%
+We further discuss two special cases,
+namely T1 and T11.
+T1 "the \_ and the \_ " is special because it 
+actually contains two singular nouns,
+instead of one singular and one plural noun. 
+The predicted verb should be plural because of the
+conjunction word "and".
+The two nouns of opposite number make it even harder for the model
+to establish number agreement. 
+This may explain the high error rate
+for T1 (Figure \ref{s}, first red bar).
+%
+In T11 we used different templates for the singular case
+(the \_ 's \_ ) and the plural case (the \_' \_).
+The average result is shown in 
+Figure \ref{s}, last green bar.
+We suspect that the accuracy is relatively
+low in this case because the plural possessive form
+may not occur frequently. 
+Indeed, a closer inspection of the numbers showed that
+the singular template had an accuracy
+of ..., while the accuracy of the plural template
+was considerably lower, ....
+%
 
-3. ANALYSIS:
-The model is less likely to agree with the number of the 
-last noun in case it has syntactic information
-that points in the direction of the first noun as the head of the subject.
-(green bars are significantly higher than red bars,
-templates with relativizer scores better than without)
-Is this indeed the case ???
+%%%% DISCUSSION / CONCLUSION:
+We conclude that, although the model 
+performs bad on complex sentences it
+still has some sensitivity for syntactic 
+structure exposed by function words. 
+
 
 \includegraphics[scale=0.5]{screenshot-syntactic-templates} 
 %TODO: save picture instead of making screenshot 
