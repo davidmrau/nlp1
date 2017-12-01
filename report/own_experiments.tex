@@ -119,29 +119,54 @@ i.e. random pattern looks different
  
 \subsection{Noun-Verb Agreement in Complex Cases}
 
-- complex cases: intervening nouns of opposite number in the prefix
-- confused, below random guess 
-- model sensitive to most recent noun \label{fig:2c}
-- in this section: 
-investigate if syntactic and semantic information
-can help the model to establish number agreement
+In Section \ref{replication} we analysed the performance of the model
+on complex sentences, containing one or more intervening
+nouns of opposite number (attractors).
+The results show that the model is very
+sensitive to the most recent noun,
+performing worse-than-chance with only one single attractor
+(Figure \ref{fig:2c}). 
+
+In this section we investigate whether
+syntactic and semantic information
+can help the model 
+to establish number agreement
 in case of attractors.
 We focus on sentences with exactly one attractor.
- 
 
-Figure \label{fig:2c} 
-
-When multiple nouns in the prefix, how does the model 'pick' the noun to agree with?
-Most recent noun is a simple heuristic, but maybe it can do better based
-on the available information?
 
 \subsubsection{Syntactic Information}
 
-We first look at syntactic clues such as punctuation
-and function words such as 'that' or 'of'
-that indicate the start of a relative resp. possesive
-clause. Do these words help the model to pick
-the noun that serves as the head of the sentence?
+To establish number agreement,
+the model must identify the noun that acts as the head of the subject.
+This is challenging for sentence prefixes that contain multiple nouns.
+Function words such as 'that' or 'of' carry 
+important information about the syntactic structure of the sentence.
+In this Section we investigate if the model
+uses this information to establish number agreement
+in the case of multiple nouns.
+We limit our analysis to prefixes 
+with exactly two nouns of opposite number.
+
+We generated sets of sentence prefixes using 
+different syntactic templates.
+An example is:
+"The [Noun1] of the [Noun2] ... [VBZ/VBP]".
+We instantiate the templates by randomly
+picking the two nouns and the verb from a set of frequently
+used nouns and verbs. 
+Each combination of nouns and verbs instantiate
+two prefixes that differ by their plurality.
+For example:
+"The company of the governments ...[know/knows]"
+"The companies of the government ...[know/knows]".
+We generated 2 x 1000 sentences per template,
+for a total of 11 templates.
+%Notice that these prefixes are typically not semantically
+%meaningful since the nouns and verbs are randomly picked.
+
+The templates are defined 
+
 
 1. TEST DATA:
 Generate sentences using different templates, singular and plural formats:
@@ -181,6 +206,9 @@ Is this indeed the case ???
   T5    & the \_ near the \_    &  0.63\\
   T6    & the \_ at the \_      &  0.70\\
   T7    & the \_ without the \_ & 0.67  \\
+\end{tabular}
+
+\begin{tabular}{ l l r }
   T8    & the \_ the \_         &  0.78\\
   T9    & the \_ that the \_    &  0.79\\
   T10   & the \_ whether the \_ &  0.85\\
