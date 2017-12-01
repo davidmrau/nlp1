@@ -44,7 +44,7 @@ following the pattern: ``The <noun> <verb>''. Notice that
 the determiner ``The'' clearly indicates the position of the noun.
 
 1. TEST DATA: 
-Generate 1000 simple prefixes in singular and plural form, like ``the company ... [produce/produces]'' 
+Generate 100 x 50 simple prefixes in singular and plural form, like ``the company ... [produce/produces]'' 
 and ``the companies ... [produce/produces]''.
 The sentences do not need to be meaningful.
 (randomly pick the nouns and verbs without taking into account their frequency in training data)
@@ -58,18 +58,62 @@ output 2: overall error rate number, error rate number for plurals, error rate n
 
 
 2. FURTHER ANALYSIS:
-hypothesis: the model falls back to pure frequencies of the two verb forms
-in case it failed to learn the counts because of sparsity in the data.
+- Build a matrix: Nouns x Verbs, 
+the entries tell whether the model predicted singular(1)
+or plural(0).
 
-Further inspect the error cases, why did it fail for these very simple sentences:
-a) maybe the model failed to learn the number of the noun (i.e. low occurrence in training data for the given noun form)?
-b) maybe the model failed to learn the number of the verb forms (i.e. low occurrence in training data for both verb forms)?
-c) maybe the occurence in the training data of the incorrect but predicted verb form is much higher than the occurrence 
-in training data of the correct form?
+- Sort the columns based on their sum
+- Sort the rows for singular nouns based on their sum (upper half)
+- Sort the rows for plural nouns based on their sum (lower half)
+- print as an image (black = plural prediction, white is singular prediction)
+
+- Discuss the picture:
+  - Do we see verbs that clearly prefer singular resp. plural?
+      (what is their plurality ratio?)
+  - Do we see nouns that clearly prefer singular resp. plural
+      (i.e. the model established their plurality), 
+    or nouns that more or less follow the preference of the verbs?
+     what is their frequency (count) in training corpus?)
+  - Do we see nouns for which the model thinks
+    that they are plural while they are in fact singular?
+    
+- Optional 1:
+  - also include picture which shown models uncertainty in grey teints
+    (uncertainty = evaluate(produces)/(evaluate(produce) + evaluate(produces))
+    this is instead of max(evaluate(produces), evaluate(produce))
+
+- Optional 2:
+  - print noun counts as an y-axis
+  - print verb plurality rates as an x-axis
+  (both are one dimensional matrices)
+  (helps visualize these characteristics)
+  (expectation: plurality rates decrease from left to right)
+  (expectation: nouns in the middle appear less frequent in training corpus)
+
+- Optional 3:
+  - repeat experiment for least frequent nouns
+  (Is ordering of columns more or less the same?)
+  (does the pattern looks different now?)
+  
+  
+- Optional 4:
+(probably not in paper)
+Show that pattern is not caused by random variations,
+i.e. random pattern looks different
+
+
+%hypothesis: the model falls back to pure frequencies of the two verb forms
+%in case it failed to learn the counts because of sparsity in the data.
+
+%Further inspect the error cases, why did it fail for these very simple sentences:
+%a) maybe the model failed to learn the number of the noun (i.e. low occurrence in training data for the given noun form)?
+%b) maybe the model failed to learn the number of the verb forms (i.e. low occurrence in training data for both verb forms)?
+%c) maybe the occurence in the training data of the incorrect but predicted verb form is much higher than the occurrence 
+%in training data of the correct form?
 %output a: histogram with x-axis z-score noun, y axis count (or percentage) of verbs that fall in this range
 %output b: histogram with x-axis z-score verb (max of both), y axis count (or percentage) of verbs that fall in this range
 %output c: histogram with x-axis percentage of predicted form, y axis count (or percentage) of verbs that fall in this range
-output(?): a scatter plot, x-axis z-score noun vs y-axis z-score verb, color gradient is percentage of predicted verb form
+%output(?): a scatter plot, x-axis z-score noun vs y-axis z-score verb, color gradient is percentage of predicted verb form
 
  
 \subsection{Noun-Verb Agreement in Complex Cases}
