@@ -101,15 +101,14 @@ or plural(0).
   
 - Optional 4:
 (might be very interesting)
-- fill the noun verb matrix with probabilities for co-occurence in
+- fill the noun verb matrix with co-occurence counts for
 sentences of the training corpus (noun before verb).
 Entries, for example for 'company and 'produce':
-Count('company and produce co-occur')/
-(Count('company and produce co-occur') + Count('company and produces co-occur'))
-Remark: this can be thought of as a language model
-that take co-occurrence between noun and verb
-as an measure to predict probabilities for next verb number.
+Count('company and produce co-occur')
+normalize (i.e rescale such that all entries between zero and one)
 Again, plot as an image.
+Idee: maybe co-occurrences of singulars are high for regions
+were model incorrectly predicts plural.
   
 - Optional 5:
 (probably not in paper)
@@ -296,11 +295,6 @@ therefore most likely not semantically related. Example:
 ``The newspaper of the employees ...[stabilizes/stabilize]''.
 
 
-Remark: the semantically related noun/verb combinations can either be manually
-chosen, or preferable, can be learned from the data by looking at verb noun combinations that 'frequently occur together'. 
-'frequently occur together' means: count(VBP + NNS)/count(VBP) is 
-relatively high.
-
 EXPERIMENT:
 Evaluate our model on the constructed testset and on the comparison set.
 If the model scores significantly better on the testset
@@ -310,7 +304,7 @@ then it shows sensitivity to semantic clues.
 %e.g. "The employee that the prices ... [stabilize/stabilizes]" 
 %In that case syntax and semantics are inconsistent)
 
-HOW TO FIND CO-OCCURRENCE RATIOS IN TRAINING
+HOW TO FIND CO-OCCURRENCE RATIOS
 \begin{itemize}
 \item find all nouns (NN) and verbs (VBZ) in a tagged corpus 
 (sec02-21.gold.tagged).
@@ -325,3 +319,10 @@ i.e. loop over all sentences and add one if noun and verb exists in sentence
 \item select for each column the entry with the highest score(s)
 (you may ignore very general verbs like is/are)
 \end{itemize}
+
+Remark: the semantically related noun/verb combinations can also be manually
+chosen, but learned from data is preferable. 
+'frequently occur together' means: count(VBZ + NN)/count(VBZ) is 
+relatively high.
+
+Remark: can be learned from tagged data set, no need to look at training data
