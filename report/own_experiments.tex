@@ -87,6 +87,7 @@ or plural(0).
 - Optional 2:
   - print noun counts as an y-axis
   - print verb plurality rates as an x-axis
+  [other way to look at it: calculate unigram probs and normalize]
   (both are one dimensional matrices)
   (helps visualize these characteristics)
   (expectation: plurality rates decrease from left to right)
@@ -100,12 +101,15 @@ or plural(0).
   
 - Optional 4:
 (might be very interesting)
-- fill the noun verb matrix with counts for co-occurence in
+- fill the noun verb matrix with probabilities for co-occurence in
 sentences of the training corpus (noun before verb).
-That is a training sentence like "company ... produce .. "
-adds one to the entry at row 'company' and column 'produce'.
-We can again normalize and rescale the numbers so that
-they are between 0 and zero and plot as an image. 
+Entries, for example for 'company and 'produce':
+Count('company and produce co-occur')/
+(Count('company and produce co-occur') + Count('company and produces co-occur'))
+Remark: this can be thought of as a language model
+that take co-occurrence between noun and verb
+as an measure to predict probabilities for next verb number.
+Again, plot as an image.
   
 - Optional 5:
 (probably not in paper)
@@ -305,3 +309,19 @@ then it shows sensitivity to semantic clues.
 %(remark: we can repeat the experiment with the nouns interchanged and check that we %score worse now,
 %e.g. "The employee that the prices ... [stabilize/stabilizes]" 
 %In that case syntax and semantics are inconsistent)
+
+HOW TO FIND CO-OCCURRENCE RATIOS IN TRAINING
+\begin{itemize}
+\item find all nouns (NN) and verbs (VBZ) in a tagged corpus 
+(sec02-21.gold.tagged).
+(pick a random selection if all is too much
+but make sure you are not only looking at
+frequent verbs since they tend to be general like 'is/are'
+instead of specific like 'stabilize')
+\item  build a matrix with nouns as rows and columns as verbs
+\item  fill entries with Count('noun and verb co-occur in a sentence')
+i.e. loop over all sentences and add one if noun and verb exists in sentence
+\item  divide all entries by their column total
+\item select for each column the entry with the highest score(s)
+(you may ignore very general verbs like is/are)
+\end{itemize}
