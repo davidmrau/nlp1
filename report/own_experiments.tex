@@ -101,15 +101,14 @@ or plural(0).
   
 - Optional 4:
 (might be very interesting)
-- fill the noun verb matrix with probabilities for co-occurence in
+- fill the noun verb matrix with co-occurence counts for
 sentences of the training corpus (noun before verb).
 Entries, for example for 'company and 'produce':
-Count('company and produce co-occur')/
-(Count('company and produce co-occur') + Count('company and produces co-occur'))
-Remark: this can be thought of as a language model
-that take co-occurrence between noun and verb
-as an measure to predict probabilities for next verb number.
+Count('company and produce co-occur')
+normalize (i.e rescale such that all entries between zero and one)
 Again, plot as an image.
+Idee: maybe co-occurrences of singulars are high for regions
+were model incorrectly predicts plural.
   
 - Optional 5:
 (probably not in paper)
