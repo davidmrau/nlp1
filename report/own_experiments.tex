@@ -346,6 +346,9 @@ then it shows sensitivity to semantic clues.
 %In that case syntax and semantics are inconsistent)
 
 HOW TO FIND CO-OCCURRENCE RATIOS
+We use PMI to measure associations between verbs and nouns.
+(https://en.wikipedia.org/wiki/Pointwise_mutual_information#Applications)
+
 \begin{itemize}
 \item find all nouns (NN) and verbs (VBZ) in a tagged corpus 
 (sec02-21.gold.tagged).
@@ -356,17 +359,16 @@ instead of specific like 'stabilize')
 \item  build a matrix with nouns as rows and columns as verbs
 \item  fill entries with Count('noun and verb co-occur in a sentence')
 i.e. loop over all sentences and add one if noun and verb exists in sentence
-\item  divide all entries by their column total
+\item  Also keep track of the total occurrences for the Verbs and nouns
+\item replace each enty by the PMI calculated from the 
+co-occurrence count, the total occurences of the noun, and the occurences
+of the verb
 \item select for each column the entry with the highest score(s)
 (you may ignore very general verbs like is/are)
 \end{itemize}
 
-Remark: the semantically related noun/verb combinations can also be manually
-chosen, but learned from data is preferable. 
-'frequently occur together' means: count(VBZ + NN) is 
-relatively high compared to count(VBZ) and count(NN).
-
-Remark: what is a good metric? Discuss with Dieuwke.
-
 Remark: can be learned from tagged data set, no need to look at training data
+
+
+
 
