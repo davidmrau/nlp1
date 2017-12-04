@@ -363,9 +363,10 @@ i.e. loop over all sentences and add one if noun and verb exists in sentence
 
 Remark: the semantically related noun/verb combinations can also be manually
 chosen, but learned from data is preferable. 
-'frequently occur together' means: count(VBZ + NN)/count(VBZ) is 
-relatively high.
+'frequently occur together' means: count(VBZ + NN) is 
+relatively high compared to count(VBZ) and count(NN).
+
+Remark: what is a good metric? Discuss with Dieuwke.
 
 Remark: can be learned from tagged data set, no need to look at training data
 
-Remark: Interesting reading about similarity metrics https://web.stanford.edu/~jurafsky/slp3/15.pdf
