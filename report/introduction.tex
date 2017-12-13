@@ -11,14 +11,14 @@ have the ability to capture long-distance statistical regularities.
 The access to potentially unlimited history 
 has resulted in substantial improvements 
 in perplexity and error rates
-compared to feed-forward networks~\cite{Mikolov2010,Sundermeyer2013}. 
+compared to feed-forward networks~\citep{Mikolov2010,Sundermeyer2013}. 
 
 %%%%%%%%%%% Context: What do we already know
 Regularities in natural language are often sensitive to syntactic structure.
 RNNs and LSTMs are sequence models that do not explicitly
 incorporate syntactic structure,
 capturing such dependencies is therefore challenging.
-Linzen et al.~\ref{Linzen2016} investigate the capability
+~\cite{Linzen2016} investigate the capability
 of LSTMs to learn syntactic dependencies, taking
 number agreement in noun-verb dependencies as an example.
 %They compare the performance of
@@ -45,7 +45,44 @@ and learn about it by observing its behavior
 in carefully designed experiments.
 
 %%%%%%%%%%% Results
-The results show that ...
+In line with the results of~\citep{Linzen2016},
+our model was able to establish number agreement 
+for most of the simple sentences,
+i.e. sentences without intervening nouns.
+This shows that our model is able to learn the 
+plurality number for nouns and verbs.
+A detailed analysis of the errors made in simple cases
+showed that they could be partially explained by 
+statistics on the training data,
+i.e. the frequencies of nouns and verbs.
+%
+
+As expected from ~\citep{Linzen2016}, our model performed 
+worse-than-change on complex sentences with
+intervening nouns of opposite number.
+The additional challenge in this case is
+to identify the head of the subject 
+without being distracted by other nouns
+that are structurally irrelevant. 
+The head of the subject is typically implied 
+by the syntactic structure of a sentence;
+e.g. the sentence ``The toys of the boy \underline{lay}''
+requires a plural verb, while the sentence
+``The toys that the boy \underline{plays} with''
+calls for a singular verb.
+We experimented with various syntactic templates
+to see if the model shows sensitivity to
+syntactic structure.
+The results show some evidence for a very 
+modest sensitivity to syntactic information 
+exposed by function words. 
+\footnote{ 
+Semantic information can also help the model
+to identify the structurally relevant noun.
+For example, in the sentence ``The prices of the product ... [stabilize/stabilizes]'', prices are more likely to stabilize than products.
+Unfortunately, the planned experiment on semantic information was not carried out because one of or team members quite the project.} 
+
+
 
 %\paragraph{Outline}
 %The remainder of this report is organized as follows \ldots
