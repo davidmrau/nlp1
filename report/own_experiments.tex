@@ -1,27 +1,5 @@
 \section{Own Experiments}
 \label{own-experiments}
-
-
-\end{multicols}
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.4\textwidth}
-    \caption{}
-        \includegraphics[width=\textwidth]{2b_least.pdf}
-        \label{fig:2b_least}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-      %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.4\textwidth}
-
-    \end{subfigure}
-    \caption{\ref{fig:2b_least} shows the error rates of the language model for the least frequent nouns in the corpus as the subject and when no intervening nouns are present}
-\end{figure}
-
-\begin{multicols}{2}
-
-
 To predict the correct number of a given verb,
 the language model should be able to
 1. identify the noun that is the head of the subject for the verb
@@ -35,99 +13,66 @@ In the second sub section we investigate if our model can handle
 more complex cases with two nouns in the prefix,
 and what information it then uses to identify the head of the subject.
 
-TODO: describe model (or in previous section)
+%TODO: describe model (or in previous section)
 
 \subsection{Noun-Verb Agreement in Simple Cases}
 
-
-In this section we investigate the ability of the model to
-establish number agreement for nouns and verbs in the simplest case,
+In this section we further investigate the ability of the model to
+establish number agreement for nouns and verbs in the simplest case
 following the pattern: ``The <noun> <verb>''. Notice that
-the determiner ``The'' clearly indicates the position of the noun.
-
-1. TEST DATA: 
-Generate 100 x 50 simple prefixes in singular and plural form, like ``the company ... [produce/produces]'' 
-and ``the companies ... [produce/produces]''.
-The sentences do not need to be meaningful.
-(randomly pick the nouns and verbs without taking into account their frequency in training data)
-
-2. EXPERIMENT: 
-Evaluate how the language model performs on these sentences 
-and conclude whether or not the model is sensitive to noun-verb agreement in simple cases. 
-(i.e. if it tends to predict plural verbs for plural nouns and singular verbs for singular nouns)
-output 1: cross table with correct vs predicted
-output 2: overall error rate number, error rate number for plurals, error rate number for singulars 
+the determiner ``The'' clearly indicates the position of the subject.
+From this we hope to get insights whether or not the model is sensitive to noun-verb agreement, i.e. if the model tends to predict plural verbs for plural nouns and singular verbs for singular nouns.
 
 
-2. FURTHER ANALYSIS:
-- Build a matrix: Nouns x Verbs, 
-the entries tell whether the model predicted singular(1)
-or plural(0).
+Using the 40 most frequent nouns and verbs that we already used earlier in the replication section, we generated 80 x 40 sentences. To evaluate how the language model is going to perform on these sentences we tested, for each noun-verb combination, how likely the model is going to predict the singular and the plural verb respectively.
 
-- Sort the columns based on their sum
-- Sort the rows for singular nouns based on their sum (upper half)
-- Sort the rows for plural nouns based on their sum (lower half)
-- print as an image (black = plural prediction, white is singular prediction)
+As a result of this evaluation we obtained a matrix in which the entries indicate the models preference for the singular/plural verb. We calculate each value
+\begin{equation}
+	v = P(<VBP>)/ P(<VBP> + P(<VBZ>), 
+\end{equation}
+where P is the models prediction probability, <VBP> is the plural verb and <VBZ> the singular verb. In this manner the matrix provides a ratio for singularity ($v=0$) and plurality($v=1$). We call $v$ the \textit{plurality preference}. To upper part of the matrix contains all noun-verb combinations for the singular nouns, where the lower part contains the plural nouns. 
 
-- Discuss the picture:
-  - Do we see verbs that clearly prefer singular resp. plural?
-      (what is their plurality ratio?)
-  - Do we see nouns that clearly prefer singular resp. plural
-      (i.e. the model established their plurality), 
-    or nouns that more or less follow the preference of the verbs?
-     what is their frequency (count) in training corpus?)
-  - Do we see nouns for which the model thinks
-    that they are plural while they are in fact singular?
-    
-- Idea 1:
-  - also include picture which shown models uncertainty in grey teints
-    (uncertainty = evaluate(produces)/(evaluate(produce) + evaluate(produces))
-    this is instead of max(evaluate(produces), evaluate(produce))
+In order to get a better visual impression we sorted the columns after the sums of the columns. The rows were sorted in a similar manner, but separately in order to conserve the separation between singular (upper half) and plural (lower half) nouns. The resulting matrix is shown in Fig. \ref{fig:matrix_ratio}.
 
-- Idea 2:
-  - print noun counts as an y-axis
-  - print verb plurality rates as an x-axis
-  [other way to look at it: calculate unigram probs and normalize]
-  (both are one dimensional matrices)
-  (helps visualize these characteristics)
-  (expectation: plurality rates decrease from left to right)
-  (expectation: nouns in the middle appear less frequent in training corpus)
-  (expectation: more plurality in upper half, resp. singularity in lower half. That is higher error rate)
+As we expected the majority of the verbs in the upper half of the matrix are predicted correctly to be singular with a high certainty. The same for the lower, plural half. Overall it can be said that the Around the horizontal axis as well as at the borders we can observe that there are specific verb/noun combinations for which the model is rather uncertain. This also matches our expectations that there are regions in the matrix where the model is not clearly in favour of the singular or plural verb. In the following we will investigate the two special cases of verbs and nouns. 
 
-- Idea 3:
-  - repeat experiment for least frequent nouns
-  (Is ordering of columns more or less the same?)
-  (does the pattern looks different now?)
-  
-- Idea 4:
-(might be very interesting)
-- fill the noun verb matrix with co-occurence counts for
-sentences of the training corpus (noun before verb).
-Entries, for example for 'company and 'produce':
-Count('company and produce co-occur')
-normalize (i.e rescale such that all entries between zero and one)
-Again, plot as an image.
-Idee: maybe co-occurrences of singulars are high for regions
-were model incorrectly predicts singular instead of plural.
-  
+In the columns close to the left border of the matrix, we can find verbs of which the model prefers the plural verb over the singular, regardless the number of the subject. For example the verb `buy` in column 0 has a plurality preference of 0.95. In the far right columns we find the verbs of which the plural verb is preferred over the singular. The verb `say` in column 39 has a plurality preference value of 0.1625.
+
+There are also nouns which clearly prefer one number over another. Around the middle of the matrix we can observe a few words that are clearly predicted wrong most of the times. The noun `income` with a plurality rate of 0.15 is mostly predicted singular whereas for example the words `weeks` (0.9) column 40, `months` (0,9) column 41, `years` (0,85) column 43, `days` (0,7) column 44, are predicted plural most of the times.
+
+To investigate the impact of the frequencies in the training data on the plurality rate (and therefore on the error) further, we calculated the error rate for each noun and plotted it against the frequency of the same noun. We expected a high error rate for low frequent nouns. As the Fig. \ref{fig:noun_freq_error} shows there is no clear evidence that a low frequency of singular or plural nouns in the training data leads to mistakes of the model. Figure \ref{fig:noun_freq_error} shows that there are singular as well as plural nouns with a low count that are predicted correctly most of the times (error rate < 0.2). 
+
+The previous experiment neglects the fact that even though a word is frequent in the corpus it could never be the subject in the training sentence. We investigated whether the nouns that we encountered before as being predicted wrong most of the times, namely: `weeks`,`months`, `years` and `days` are in fact rarely the subject in the training data. This suggests that the model is not indeed not able to establish the number agreement for nouns and verbs in a more general but rather in a statistical way. Figure \ref{fig:lin_reg} supports this assumption. It shows the plurality rate plotted against the plurality preference for each verb. We can see that with an increasing plurality rate the plurality preference increases, as expected. The line in the figure was generated by performing a linear regression through the points. 
 
 
 
 
-%hypothesis: the model falls back to pure frequencies of the two verb forms
-%in case it failed to learn the counts because of sparsity in the data.
 
-%Further inspect the error cases, why did it fail for these very simple sentences:
-%a) maybe the model failed to learn the number of the noun (i.e. low occurrence in training data for the given noun form)?
-%b) maybe the model failed to learn the number of the verb forms (i.e. low occurrence in training data for both verb forms)?
-%c) maybe the occurence in the training data of the incorrect but predicted verb form is much higher than the occurrence 
-%in training data of the correct form?
-%output a: histogram with x-axis z-score noun, y axis count (or percentage) of verbs that fall in this range
-%output b: histogram with x-axis z-score verb (max of both), y axis count (or percentage) of verbs that fall in this range
-%output c: histogram with x-axis percentage of predicted form, y axis count (or percentage) of verbs that fall in this range
-%output(?): a scatter plot, x-axis z-score noun vs y-axis z-score verb, color gradient is percentage of predicted verb form
+\end{multicols}
 
- 
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+    \caption{}
+        \includegraphics[width=\textwidth]{matrix_plot_ratio.pdf}
+        \label{fig:matrix_ratio}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.32\textwidth}
+    	\caption{}
+        \includegraphics[width=\textwidth]{lin_reg.pdf}
+        \label{{fig:matrix_ratio}}
+    \end{subfigure}
+        \begin{subfigure}[b]{0.32\textwidth}
+    	\caption{}
+        \includegraphics[width=\textwidth]{noun_freq_error_rate.pdf}
+        \label{fig:noun_freq_error}
+    \end{subfigure}
+    \caption{\ref{fig:matrix_ratio} singularity/plurality ratio for 80 x 40 sentences (generated from the most frequent 40 nouns and verbs). The upper half contains the singular nouns (NN), the lower half contains the plural nouns(NNS). A red cell indicates a plural preference for a specific word/noun combination, whereas a blue cell indicates a singular preference. \ref{fig:matrix_ratio} plurality rate plotted against the plurality preference of the model for all nouns. The line arises from a linear regression through the points. \ref{fig:noun_freq_error} influence of the noun frequency on the error rate of the model.}
+\end{figure}
+
+\begin{multicols}{2}
 \subsection{Noun-Verb Agreement in Complex Cases}
 
 In Section \ref{replication} we analysed the performance of the model

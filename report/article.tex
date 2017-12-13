@@ -152,24 +152,29 @@ The language model was tested on lower case sentences that were generated from t
 \end{equation}
 According to the experiments in \citep{Linzen2016} we examine the models error rate predicting the number of a verb in a sentence when nouns intervene between the subject and the verb. 
 
-We next test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. If it does so it is referred to as an\textit{agreement attractor}. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last intervening noun in the sentence.
+We next test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. If it does so it is referred to as an \textit{agreement attractor}. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last intervening noun in the sentence.
 \end{multicols}
 
 \begin{figure}
     \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.32\textwidth}
     \caption{}
         \includegraphics[width=\textwidth]{2b.pdf}
         \label{fig:2b}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.32\textwidth}
     	\caption{}
         \includegraphics[width=\textwidth]{2c.pdf}
         \label{fig:2c}
     \end{subfigure}
-    \caption{Error rates of the language model plotted against: \ref{fig:2b} presence and number of last intervening noun; \ref{fig:2c} count of attractors in dependencies with homogeneous intervention}
+    \begin{subfigure}[b]{0.32\textwidth}
+    \caption{}
+        \includegraphics[width=\textwidth]{2b_least.pdf}
+        \label{fig:2b_least}
+    \end{subfigure}
+    \caption{Error rates of the language model plotted against: \ref{fig:2b} presence and number of last intervening noun; \ref{fig:2c} count of attractors in dependencies with homogeneous intervention. \ref{fig:2b_least} shows the error rates of the language model for the least frequent nouns in the corpus as the subject and when no intervening nouns are present}
 \end{figure}
 
 \begin{multicols}{2}
@@ -189,6 +194,7 @@ In the following we examine the error rate when adding multiple attractors to th
 \end{equation}
 Figure \ref{fig:2c} shows that with an increasing number of noun interventions the error rate goes from 20.8\% (0 attractors) up to 73.6\% (4 attractors) which is close to randomly guessing the number of the verb. 
 
+%TODO: describe 2b_least in text and give implications
 
 \input{own_experiments}
 
@@ -200,20 +206,11 @@ Figure \ref{fig:2c} shows that with an increasing number of noun interventions t
 \section{Conclusion and Future Work}
 \label{conclusion}
 
+To follow up on the experiments we did it would be interesting to perform the replication of the Linzen experiments on real world sentences rather than on artificially constructed ones. The sentences that we generated might be not semantically meaningful and could be syntactically more divers. It remains open whether our model would perform differently on those.
 
-Future work: 
-- replicate Linzen experiment with real world sentences
-* less artificial
-* semantically meaningful
-* syntactically more divers
-Does the model perform better or worse?
+Another interesting aspect of working with LSTMs is to look into the embeddings and further investigate the internal state of the network rather than treating it like a black box. Looking at the activations of the LSTMs might give further insights in the weaknesses of the model and could lead to a better error analysis then by looking solely at the predictions. 
 
-Future work: 
-- In this paper we treat the model as a black box.
-It would be interesting to do some introspection:
-PCA? Look at activations? (see Linzen paper)
-
-
+For future work it would be also interesting to support the model with explicit syntactic rules in order to generalise instead of relying too much on statistical properties of the training corpus.
 
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
