@@ -6,22 +6,17 @@ __Remark__: the directory experiments misses the files _model.pt_ (too large) an
 ## Task
 - Abstract                                   (Maartje)
 - Introduction                               (Maartje)
-- Background                                 (David)
-- Related Work (summary Linzen)              (Maartje*)
-- Problem Analysis                           (Maartje)
+- Related Work (summary Linzen)              (Maartje)
 - Replication                                
-    - Distance (Linzen fig. 2a)              (Jerome*)
-    - Last Intervening Noun (Linzen fig. 2b) (David*)
-    - Attractor Count (Linzen fig. 2c)       (David*)
-    - (Linzen 2d seems less relevant)
+    - Last Intervening Noun (Linzen fig. 2b) (David)
+    - Attractor Count (Linzen fig. 2c)       (David)
 - Own Experiments
-    - Simple cases                           (David*)
-    - complex cases - syntax                 (Maartje*)
-    - complex cases - semantics              (Jerome)
-- Discussion and Future Work                 (Jerome)
-- Conclusion                                 (Jerome)
+    - Simple cases                           (David)
+    - complex cases - syntax                 (Maartje)
+- Conclusion and Future Work                 (David)
 
-(Short presentation:                          (Jerome))
+
+
 
 
   

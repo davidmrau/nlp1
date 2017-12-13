@@ -112,14 +112,6 @@ on Syntactic Dependencies
 %	BACKGROUND
 %----------------------------------------------------------------------------------------
 
-\section{Background}
-\label{background}
-
-- what is language modeling?
-
-- what kind of language modelling did we study?
-
-- what is the problem that we focus on?
 
 
 %A background section, in which you explain what is language modelling,
@@ -197,32 +189,17 @@ In the following we examine the error rate when adding multiple attractors to th
 \end{equation}
 Figure \ref{fig:2c} shows that with an increasing number of noun interventions the error rate goes from 20.8\% (0 attractors) up to 73.6\% (4 attractors) which is close to randomly guessing the number of the verb. 
 
-\subsection{Distance}
-
-The ability of the model to track the number of a noun may degrade
-when the noun and the verb are far apart.
-Below we investigate the effect of distance on number agreement for simple,
-single noun, cases.
-
-1. TEST DATA:
-Pick the simple cases and generate multiple additional cases for each by adding 0 to n additional words (using a template so that the sentence prefix is at least grammatically correct)
-[preferable: use real sentences of different length without attractors for this]
-
-2. EXPERIMENT:
-Evaluate how the language model performs on these sentences 
-and conclude whether or not the model is robust to distance. 
-(i.e. if it tends to predict plural verb for plural nouns even when they are far apart)
-output: line diagram with x-axis distance (number of words inbetween), y-axis error rate
-
 
 \input{own_experiments}
 
 
+
 %----------------------------------------------------------------------------------------
-%	DISCUSSION
+%	CONCLUSION
 %----------------------------------------------------------------------------------------
-\section{Discussion and Future Work}
-\label{discussion}
+\section{Conclusion and Future Work}
+\label{conclusion}
+
 
 Future work: 
 - replicate Linzen experiment with real world sentences
@@ -236,13 +213,6 @@ Future work:
 It would be interesting to do some introspection:
 PCA? Look at activations? (see Linzen paper)
 
-%----------------------------------------------------------------------------------------
-%	CONCLUSION
-%----------------------------------------------------------------------------------------
-\section{Conclusion}
-\label{conclusion}
-
-- Conclusion \ldots
 
 
 %----------------------------------------------------------------------------------------
