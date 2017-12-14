@@ -18,7 +18,7 @@ Regularities in natural language are often sensitive to syntactic structure.
 RNNs and LSTMs are sequence models that do not explicitly
 incorporate syntactic structure,
 capturing such dependencies is therefore challenging.
-~\cite{Linzen2016} investigate the capability
+Linzen et al.~\cite{Linzen2016} investigate the capability
 of LSTMs to learn syntactic dependencies, taking
 number agreement in noun-verb dependencies as an example.
 %They compare the performance of
@@ -37,11 +37,10 @@ In this paper we investigate an LSTM language model
 in more detail to get a better insight into what 
 information these models actually encode.
 We consider statistic, syntactic and 
-semantic information~\footnote{
+semantic\footnote{
 Unfortunately the experiment was not completed
 because one of the team members quite the project.
-}
-and analyse how the model uses this information
+} information and analyse how the model uses this information
 to establish number agreement. 
 We take an empirical approach.
 That is, we treat the model as a black box
