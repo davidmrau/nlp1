@@ -18,15 +18,15 @@ The paper compares the performance of LSTMs
 trained with an explicit grammatical target as training objective,
 as well as a more generic language model trained with the target to
 predict the next word. 
-The grammatical models had the following objectives:
-\textit{number prediction} is trained to predict the 
-number of the next verb without knowing the verb,
-\textit{verb inflection} is similar to number prediction
-but with the difference that the model knows the verb,
-for \textit{grammatical judgement} the network is asked
-to judge whether a sentence is grammatical correct, 
-without knowing the position of a possible incorrect
-verb.
+%The grammatical models had the following objectives:
+%\textit{number prediction} is trained to predict the 
+%number of the next verb without knowing the verb,
+%\textit{verb inflection} is similar to number prediction
+%but with the difference that the model knows the verb,
+%for \textit{grammatical judgement} the network is asked
+%to judge whether a sentence is grammatical correct, 
+%without knowing the position of a possible incorrect
+%verb.
 The models are trained on a corpus without syntactic annotations (Wikipedia).
 The models are evaluated on real sentences taken from this corpus
 that were sampled based on their grammatical complexity. 
@@ -34,7 +34,7 @@ that were sampled based on their grammatical complexity.
 %%%% Results
 All models achieved an overall error rate below 7\%. However,
 the explicitly trained models perform much better 
-(verb inflection 0.8\%, number prediction 0.83\%, grammatical judgement 2,5\%)
+(0.8\% for the best performing model)
 compared to the language model (6.8\%). 
 The overall high accuracy for all models can be explained by
 the fact that most naturally occurring sentences are actually
@@ -57,9 +57,9 @@ compared to the explicitly supervised models.
 
 %%%% Introspection of the model
 The accuracy of the grammatically trained models strongly suggests
-that the model is sensitive to structural dependencies. To
+that the models are sensitive to structural dependencies. To
 find additional support for syntactic sensitivity the authors
-inspected the inner workings of the number prediction model.
+of the paper inspected the inner workings of one of these models.
 Principal component analysis on embeddings of singular and plural nouns
 shows that the first principal component
 corresponds almost perfectly to the expected number of the noun,
