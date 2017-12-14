@@ -30,19 +30,20 @@ As a result of this evaluation we obtained a matrix in which the entries indicat
 \begin{equation}
 	v = P(<VBP>)/ P(<VBP> + P(<VBZ>), 
 \end{equation}
-where P is the models prediction probability, <VBP> is the plural verb and <VBZ> the singular verb. In this manner the matrix provides a ratio for singularity ($v=0$) and plurality($v=1$). We call $v$ the \textit{plurality preference}. To upper part of the matrix contains all noun-verb combinations for the singular nouns, where the lower part contains the plural nouns. 
+where P is the models prediction probability, <VBP> is the plural verb and <VBZ> the singular verb. In this manner the matrix provides a ratio for singularity ($v=0$) and plurality($v=1$). We call $v$ the \textit{plurality preference}. The upper part of the matrix contains all noun-verb combinations for the singular nouns, whereas the lower part contains the plural nouns. 
 
 In order to get a better visual impression we sorted the columns after the sums of the columns. The rows were sorted in a similar manner, but separately in order to conserve the separation between singular (upper half) and plural (lower half) nouns. The resulting matrix is shown in Fig. \ref{fig:matrix_ratio}.
 
-As we expected the majority of the verbs in the upper half of the matrix are predicted correctly to be singular with a high certainty. The same for the lower, plural half. Overall it can be said that the Around the horizontal axis as well as at the borders we can observe that there are specific verb/noun combinations for which the model is rather uncertain. This also matches our expectations that there are regions in the matrix where the model is not clearly in favour of the singular or plural verb. In the following we will investigate the two special cases of verbs and nouns. 
+As we expected the majority of the verbs in the upper half of the matrix are predicted correctly to be singular with a high certainty. The same for the lower, plural half. Overall it can be said that around the horizontal axis as well as at the vertical borders we can observe that there are specific verb/noun combinations for which the model is rather uncertain. This also matches our expectations that there are regions in the matrix where the model is not clearly in favour of the singular or plural verb. 
 
+In the following we will investigate the two special cases of verbs and nouns where the model is less certain: 
 In the columns close to the left border of the matrix, we can find verbs of which the model prefers the plural verb over the singular, regardless the number of the subject. For example the verb `buy` in column 0 has a plurality preference of 0.95. In the far right columns we find the verbs of which the plural verb is preferred over the singular. The verb `say` in column 39 has a plurality preference value of 0.1625.
 
 There are also nouns which clearly prefer one number over another. Around the middle of the matrix we can observe a few words that are clearly predicted wrong most of the times. The noun `income` with a plurality rate of 0.15 is mostly predicted singular whereas for example the words `weeks` (0.9) column 40, `months` (0,9) column 41, `years` (0,85) column 43, `days` (0,7) column 44, are predicted plural most of the times.
 
-To investigate the impact of the frequencies in the training data on the plurality rate (and therefore on the error) further, we calculated the error rate for each noun and plotted it against the frequency of the same noun. We expected a high error rate for low frequent nouns. As the Fig. \ref{fig:noun_freq_error} shows there is no clear evidence that a low frequency of singular or plural nouns in the training data leads to mistakes of the model. Figure \ref{fig:noun_freq_error} shows that there are singular as well as plural nouns with a low count that are predicted correctly most of the times (error rate < 0.2). 
+To investigate the impact of the frequencies in the training data on the plurality rate (and therefore on the error) further, we calculated the error rate for each noun and plotted it against the frequency of the same noun. We expected a high error rate for low frequent nouns. As the Fig. \ref{fig:noun_freq_error} shows there is no clear evidence that a low frequency of singular or plural nouns in the training data leads to wrong predictions of the model. Figure \ref{fig:noun_freq_error} shows that there are singular as well as plural nouns with a low count that are predicted correctly most of the times (error rate < 0.2). 
 
-The previous experiment neglects the fact that even though a word is frequent in the corpus it could never be the subject in the training sentence. We investigated whether the nouns that we encountered before as being predicted wrong most of the times, namely: `weeks`,`months`, `years` and `days` are in fact rarely the subject in the training data. This suggests that the model is not indeed not able to establish the number agreement for nouns and verbs in a more general but rather in a statistical way. Figure \ref{fig:lin_reg} supports this assumption. It shows the plurality rate plotted against the plurality preference for each verb. We can see that with an increasing plurality rate the plurality preference increases, as expected. The line in the figure was generated by performing a linear regression through the points. 
+The previous experiment neglects the fact that even though a word is frequent in the corpus it could never be the subject in the training sentence. We investigated whether the nouns that we encountered before as being predicted wrong most of the times, namely: `weeks`,`months`, `years` and `days` are in fact rarely the subject in the training data. This suggests that the model is indeed not able to establish the number agreement for nouns and verbs in a more general but rather in a statistical way. Figure \ref{fig:lin_reg} supports this assumption. It shows the plurality rate plotted against the plurality preference for each verb. We can see that with an increasing plurality rate the plurality preference increases, as expected. The line in the figure was generated by performing a linear regression through the points. 
 
 
 
@@ -52,19 +53,19 @@ The previous experiment neglects the fact that even though a word is frequent in
 
 \begin{figure}
     \centering
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
     \caption{}
         \includegraphics[width=\textwidth]{matrix_plot_ratio.pdf}
         \label{fig:matrix_ratio}
     \end{subfigure}
     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.32\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
     	\caption{}
         \includegraphics[width=\textwidth]{lin_reg.pdf}
-        \label{{fig:matrix_ratio}}
+        \label{fig:lin_reg}
     \end{subfigure}
-        \begin{subfigure}[b]{0.32\textwidth}
+        \begin{subfigure}[b]{0.4\textwidth}
     	\caption{}
         \includegraphics[width=\textwidth]{noun_freq_error_rate.pdf}
         \label{fig:noun_freq_error}
