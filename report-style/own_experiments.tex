@@ -19,27 +19,47 @@ and what information it then uses to identify the head of the subject.
 
 In this section we further investigate the ability of the model to
 establish number agreement for nouns and verbs in the simplest case
-following the pattern: ``The <noun> <verb>''. Notice that
-the determiner ``The'' clearly indicates the position of the subject.
-From this we hope to get insights whether or not the model is sensitive to noun-verb agreement, i.e. if the model tends to predict plural verbs for plural nouns and singular verbs for singular nouns.
+following the pattern: ``The <noun> <verb>''. 
+%Notice that
+%the determiner ``The'' clearly indicates the position of the subject.
+From this we hope to get insights into whether or not the model is sensitive to noun-verb agreement, i.e. if the model tends to predict plural verbs for plural nouns and singular verbs for singular nouns.
+
+Using the 40 most frequent nouns and verbs that we already used earlier in the replication section, we generated 80 x 40 sentences that cover each noun verb combination and include both the plural and the singular version of the noun. 
+%To evaluate how the language model performs on these sentences, 
+We tested for each noun-verb combination whether the model 
+predicts the singular or the plural form of the verb,
+and how sure it is about this prediction.
 
 
-Using the 40 most frequent nouns and verbs that we already used earlier in the replication section, we generated 80 x 40 sentences. To evaluate how the language model is going to perform on these sentences we tested, for each noun-verb combination, how likely the model is going to predict the singular and the plural verb respectively.
-
-As a result of this evaluation we obtained a matrix in which the entries indicate the models preference for the singular/plural verb. We calculate each value
+As a result of this evaluation we obtained a matrix in which 
+the rows represent the nouns,
+the columns represent the verbs, and
+the entries indicate the models preference for the plural verb. 
+The upper half of the matrix contains all noun-verb combinations for the singular nouns, whereas the lower half contains the plural nouns. 
+We calculate each entry value
 \begin{equation}
-	v = P(<VBP>)/ P(<VBP> + P(<VBZ>), 
+	v = \frac{P(<VBP>)}{P(<VBP>) + P(<VBZ>)} 
 \end{equation}
-where P is the models prediction probability, <VBP> is the plural verb and <VBZ> the singular verb. In this manner the matrix provides a ratio for singularity ($v=0$) and plurality($v=1$). We call $v$ the \textit{plurality preference}. The upper part of the matrix contains all noun-verb combinations for the singular nouns, whereas the lower part contains the plural nouns. 
+where $P$ is the models prediction probability, $<VBP>$ is the plural 
+form of the verb and $<VBZ>$ the singular form of the verb. In this manner the matrix entries represent 
+a preference score for plurality ranging from
+$v=0$ (surely singular) to $v=1$ (surely plural). 
+We call $v$ the \textit{plurality preference}. 
 
-In order to get a better visual impression we sorted the columns after the sums of the columns. The rows were sorted in a similar manner, but separately in order to conserve the separation between singular (upper half) and plural (lower half) nouns. The resulting matrix is shown in Fig. \ref{fig:matrix_ratio}.
+In order to get a better visual impression we sorted the verbs 
+after their total plurality preference, i.e. the sums of the columns. 
+The rows were sorted in a similar manner, but each half separately in order to conserve the separation between singular (upper half) and plural (lower half) nouns. The resulting matrix is shown in Fig. \ref{fig:matrix_ratio}.
 
-As we expected the majority of the verbs in the upper half of the matrix are predicted correctly to be singular with a high certainty. The same for the lower, plural half. Overall it can be said that around the horizontal axis as well as at the vertical borders we can observe that there are specific verb/noun combinations for which the model is rather uncertain. This also matches our expectations that there are regions in the matrix where the model is not clearly in favour of the singular or plural verb. 
+As we expected the majority of the verbs in the upper half of the matrix are predicted correctly to be singular with a high certainty. The same for the lower, plural half. Overall it can be said that around the horizontal centre 
+as well as at the vertical borders we can observe that there are specific noun/verb combinations for which the model is rather uncertain and/or incorrect. This also matches our expectations that there are regions in the matrix where the model is not clearly in favour of the singular or plural verb. 
 
-In the following we will investigate the two special cases of verbs and nouns where the model is less certain: 
-In the columns close to the left border of the matrix, we can find verbs of which the model prefers the plural verb over the singular, regardless the number of the subject. For example the verb `buy` in column 0 has a plurality preference of 0.95. In the far right columns we find the verbs of which the plural verb is preferred over the singular. The verb `say` in column 39 has a plurality preference value of 0.1625.
+In the following we will investigate the two special cases of verbs and nouns where the model goes wrong: 
+In the columns close to the left border of the matrix, we can find verbs of which the model prefers the plural verb over the singular, regardless the number of the subject. For example the verb `buy` in column 0 has a plurality preference of 0.95. At the other hand, in the far right columns we find the verbs for which the singular verb is most often preferred over the plural form. The verb `say` in column 39 has a plurality preference value of 0.16.
 
-There are also nouns which clearly prefer one number over another. Around the middle of the matrix we can observe a few words that are clearly predicted wrong most of the times. The noun `income` with a plurality rate of 0.15 is mostly predicted singular whereas for example the words `weeks` (0.9) column 40, `months` (0,9) column 41, `years` (0,85) column 43, `days` (0,7) column 44, are predicted plural most of the times.
+There are also nouns which show preference for the wrong number and nouns
+that seem to follow the preference of the verbs, 
+instead of influencing the preference rate with their own number.
+Around the middle of the matrix we can observe a few words that are clearly predicted wrong most of the times. The noun `income` (column 39) with a plurality rate of 0.15 is mostly predicted plural, whereas for example in clomuns 40 to 44 the words `weeks` (0.9), `months` (0,9), `years` (0,85), and `days` (0,7), are incorrectly predicted singular most of the times.
 
     
 To investigate the impact of the frequencies in the training data on the plurality rate (and therefore on the error) further, we calculated the error rate for each noun and plotted it against the frequency of the same noun. We expected a high error rate for low frequent nouns. As the Fig. \ref{fig:noun_freq_error} shows there is no clear evidence that a low frequency of singular or plural nouns in the training data leads to wrong predictions of the model. Figure \ref{fig:noun_freq_error} shows that there are singular as well as plural nouns with a low count that are predicted correctly most of the times (error rate < 0.2).
