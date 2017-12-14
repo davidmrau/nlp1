@@ -14,15 +14,19 @@ more complex cases with two nouns in the prefix,
 and what information it then uses to identify the head of the subject.
 
 %TODO: describe model (or in previous section)
+%establish noun-verb agreement, i.e. if the model tends to predict plural verbs for %plural nouns and singular verbs for singular nouns.
 
 \subsection{Noun-Verb Agreement in Simple Cases}
 
 In this section we further investigate the ability of the model to
-establish number agreement for nouns and verbs in the simplest case
-following the pattern: ``The <noun> <verb>''. 
+establish number agreement for nouns and verbs in the simplest case,
+following the pattern: ``The [noun] [verb]''. 
 %Notice that
 %the determiner ``The'' clearly indicates the position of the subject.
-From this we hope to get insights into whether or not the model is sensitive to noun-verb agreement, i.e. if the model tends to predict plural verbs for plural nouns and singular verbs for singular nouns.
+From this we hope to get insights into whether or not the model is able 
+to learn the plurality number for nouns and verbs.
+This is a prerequisite for establishing number agreement
+for simple as well as complex cases.
 
 Using the 40 most frequent nouns and verbs that we already used earlier in the replication section, we generated 80 x 40 sentences that cover each noun verb combination and include both the plural and the singular version of the noun. 
 %To evaluate how the language model performs on these sentences, 
@@ -34,13 +38,14 @@ As a result of this evaluation we obtained a matrix in which
 the rows represent the nouns,
 the columns represent the verbs, and
 the entries indicate the models preference for the plural verb. 
-The upper half of the matrix contains all noun-verb combinations for the singular nouns, whereas the lower half contains the plural nouns. 
-We calculate each entry value
+The upper half of the matrix contains all noun-verb combinations for the singular nouns, while the lower half contains the plural nouns. 
+We calculate each entry value as
 \begin{align*}
 	v = \frac{P(<VBP>)}{P(<VBP>) + P(<VBZ>)} 
 \end{align*}
 where $P$ is the models prediction probability, $<VBP>$ is the plural 
-form of the verb and $<VBZ>$ the singular form of the verb. In this manner the matrix entries represent 
+form of the verb and $<VBZ>$ the singular form of the verb. 
+In this manner the matrix entries represent 
 a preference score for plurality ranging from
 $v=0$ (surely singular) to $v=1$ (surely plural). 
 We call $v$ the \textit{plurality preference}. 
@@ -50,7 +55,8 @@ after their total plurality preference, i.e. the sums of the columns.
 The rows were sorted in a similar manner, but each half separately in order to conserve the separation between singular (upper half) and plural (lower half) nouns. The resulting matrix is shown in Fig. \ref{fig:matrix_ratio}.
 
 As we expected the majority of the verbs in the upper half of the matrix are predicted correctly to be singular with a high certainty. The same for the lower, plural half. Overall it can be said that around the horizontal centre 
-as well as at the vertical borders we can observe that there are specific noun/verb combinations for which the model is rather uncertain and/or incorrect. 
+as well as at the vertical borders we can observe that there are specific 
+noun/verb combinations for which the model is rather uncertain and/or incorrect. 
 In the following we will investigate the two special cases of verbs and nouns where the model goes wrong.
 
 \subsubsection{Verb Statistics}
