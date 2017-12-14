@@ -1,0 +1,138 @@
+\section{Introduction}
+
+%%%%%%%%%%% Problem Area: RNN, LSTM networks
+Neural networks have become increasingly popular
+for the task of language modeling.
+While feed-forward networks only take into account
+a fixed history of preceeding words to predict the next word,
+standard recurrent neural networks (RNN) and 
+Long Short-Term Memory (LSTM) network architectures
+have the ability to capture long-distance statistical regularities.
+The access to potentially unlimited history 
+has resulted in substantial improvements 
+in perplexity and error rates
+compared to feed-forward networks~\citep{Mikolov2010,Sundermeyer2013}. 
+
+%%%%%%%%%%% Context: What do we already know
+Regularities in natural language are often sensitive to syntactic structure.
+RNNs and LSTMs are sequence models that do not explicitly
+incorporate syntactic structure,
+capturing such dependencies is therefore challenging.
+~\cite{Linzen2016} investigate the capability
+of LSTMs to learn syntactic dependencies, taking
+number agreement in noun-verb dependencies as an example.
+%They compare the performance of
+%a general LSTM language model with the performance of 
+%LSTM models trained on explicit grammatical targets.
+%They conclude that LSTMs can capture 
+%structure-sensitive dependencies given explicit supervision;
+%while the language modeling objective is not sufficient for learning
+%such dependencies.
+Their results show that the language modeling objective by itself
+is not sufficient for learning structure-sensitive dependencies;
+and that more explicit supervision is required.
+
+%%%%%%%%%%% Problem + Approach
+In this paper we investigate an LSTM language model
+in more detail to get a better insight into what 
+information these models actually encode.
+We consider statistic, syntactic and semantic information
+and analyse how the model uses this information
+to establish number agreement. 
+We take an empirical approach.
+That is, we treat the model as a black box
+and learn about it by observing its behavior
+in carefully designed experiments.
+
+%%%%%%%%%%% Results
+In line with the results of~\citep{Linzen2016},
+our model was able to establish number agreement 
+for most of the simple sentences,
+i.e. sentences without intervening nouns.
+This shows that our model is able to learn the 
+plurality number for nouns and verbs.
+A detailed analysis of the errors made in simple cases
+showed that they could be explained partially by 
+statistics on the training data,
+i.e. the frequencies of nouns and 
+the frequency ratio of plural versus singular verbs.
+%
+
+As expected from ~\citep{Linzen2016}, our model performed 
+worse-than-change on complex sentences with
+intervening nouns of opposite number.
+The additional challenge in this case is
+to identify the head of the subject 
+without being distracted by other 
+structurally irrelevant nouns. 
+The head of the subject is typically implied 
+by the syntactic structure of a sentence;
+e.g. the sentence ``The toys of the boy \underline{lay}''
+requires a plural verb, while the sentence
+``The toys that the boy \underline{plays} with''
+calls for a singular verb.
+We experimented with various syntactic templates
+to see if the model shows sensitivity to
+syntactic structure.
+The results suggest a 
+modest sensitivity to syntactic information 
+exposed by function words. 
+\footnote{ 
+Semantic information can also help the model
+to identify the structurally relevant noun.
+For example, in the sentence ``The prices of the product ... [stabilize/stabilizes]'', prices are more likely to stabilize than products.
+Unfortunately, the planned experiment on semantic information was not carried out because one of the team members quite the project.} 
+
+
+
+%\paragraph{Outline}
+%The remainder of this report is organized as follows \ldots
+
+%We first repeat the experiments from the linzen paper
+%on a language model trained on PTB corpus.
+%We reach similar conclusions,
+%TODO: what about distance?
+%While the model can establish number agreement
+%for simple cases without intervening nouns,
+%it fails for more complex cases scoring below average.
+
+%We then take a closer look on the errors
+%it made on simple cases without intervening nouns.
+%By analyzing noun/verb combinations
+%we identify verbs that show a strong preference for either
+%one of the forms (singlar or plural),
+%ignoring the count of the noun.
+%In addition, we identified nouns that
+%the model seems to have failed to learn or even mis-learned
+%the number.
+%We explained these cases by frequency statistics on the training corpus.
+
+%We then look at syntactic information exposed 
+%by function words such as 'that' and 'of'.
+%We measure the performance of the model on 
+%generated sentences constructed following a specific
+%syntactic structure. 
+%From this experiment we learned that
+%function words can help the model to establish
+%number agreement with the structurally relevant noun.
+%But the evidence is very week.
+
+%Thus far we looked at random generated nonsense
+%sentences, ignoring the fact that sentences 
+%are typically about something.
+%In real world sentences some verbs 
+%tend to form subject verb dependencies with certain nouns
+%while other nouns do not mae sense.
+%This can help the model.
+%The price of the products stabilize/stabilizes.
+%prices are semanticly related to stabilize,
+%while products are not.
+%We compare prefixes with a noun that
+%is semantically related 
+%compare with same prefic with noun replaced by random noun.
+%to prefixes with a noun that is not.
+%Does the semantic relation helps to establish
+%number agreement with the relevant noun?
+
+%From these experiments we conclude that
+%...

@@ -1,0 +1,173 @@
+%
+% File naaclhlt2018.tex
+%
+%% Based on the style files for NAACL-HLT 2018, which were
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
+%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{naaclhlt2018}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{graphics, graphicx}
+\usepackage{url}
+
+\aclfinalcopy % Uncomment this line for the final submission
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+\title{Empirical Evaluation of LSTM Language Models \bigskip
+on Syntactic Dependencies}
+
+
+
+\author{
+Maartje de Jonge\\
+\tt Student ID: ***\\
+{\tt email@domain} \\\And
+David Rau \\
+\tt Student ID: 17725184\\
+{\tt david.rau@student.uva.nl} \\}
+
+
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\begin{abstract}
+
+\noindent 
+- main idea
+- key findings
+
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+\input{introduction}
+
+%----------------------------------------------------------------------------------------
+%	BACKGROUND
+%----------------------------------------------------------------------------------------
+
+
+
+%A background section, in which you explain what is language modelling,
+%what kind of language model you studied, and what is the problem you
+%focus on. To write this background section, you can use the suggested
+%papers, but also add papers;
+
+%----------------------------------------------------------------------------------------
+%	PREVIOUS WORK
+%----------------------------------------------------------------------------------------
+
+\input{related_work}
+
+
+%----------------------------------------------------------------------------------------
+%	EXPERIMENTS
+%----------------------------------------------------------------------------------------
+
+\section{Replication}
+\label{replication}
+
+\subsection{Singular and Plural Nouns}
+
+\textbf{Data:} 
+The language model was tested on lower case sentences that were generated from the Wall Street Journal section of the Penn Treebank \citep{Marcus1993}. Therefore, 40 nouns and verbs, that were amongst the most common and occur in the test corpus as well as in language model's corpus, were extracted. Those words build the base for the sentence generation for the subsequent experiments. 
+
+\textbf{Model evaluation:} In order to evaluate the performance of our model, we query it with the sentence containing both, the plural (\ref{sent:wrong}) and the singular (\ref{sent:right}) mode of the verb: 
+
+\begin{equation}
+	\label{sent:wrong}
+	\textnormal{the producer plan}
+\end{equation}
+\begin{equation}
+	\label{sent:right}
+	\textnormal{the producer  \textbf{plans}}
+\end{equation}
+According to the experiments in \citep{Linzen2016} we examine the models error rate predicting the number of a verb in a sentence when nouns intervene between the subject and the verb. 
+
+
+    \begin{figure}
+    \centering
+        \includegraphics[scale=0.5]{2b.pdf}
+            \caption{Error rates of the language model plotted against count of attractors in dependencies with homogeneous intervention.}
+        \label{fig:2b}
+    \end{figure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{figure}
+    \centering
+        \includegraphics[scale=0.5]{2c.pdf}
+            	\caption{Error rates of the language model plotted against: presence and number of last intervening noun}
+        \label{fig:2c}
+    \end{figure}
+
+We next test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. If it does so it is referred to as an \textit{agreement attractor}. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last intervening noun in the sentence.
+
+As depicted in Figure \ref{fig:2b} our model performs slightly worse for plural subjects (17.7\% error rate) than for singular (15,2\% error rate) when no intervening nouns are present. An intervening noun with the same number as the subject causes a slight increase of the error rate to 18.6\% and a decrease to 15.1\%, respectively. Surprisingly, when the number of the subject differs from the intervening noun the error rates increased dramatically; in singular subjects to 57,9\% in plural subjects to 60,8\%. The fact that it performs worse than predicting the number by chance implies that the model indeed predicts the number of the verb in dependence of the last noun and therefore fails to find the dependency between verb and noun.
+
+\subsection{Multiple Attractors}
+
+In the following we examine the error rate when adding multiple attractors to the sentence. In order to avoid the model of being distracted by an intervening noun with same number as the subject we only insert nouns with the same number . \citep{Linzen2016} refer to such as  \textit{ dependencies with homogeneous intervention}. In (\ref{sent:right2}) the underlined represent homogeneous interventions, whereas in (\ref{sent:wrong2}) the number of the intervening nouns differ. The bold words highlight the dependency between noun and corresponding verb.
+
+\begin{equation}
+	\label{sent:right2}
+	\textnormal{the \textbf{interest} in the \underline{shares} of the \underline{businesses} \textbf{rises} \dots}
+\end{equation}
+\begin{equation}
+	\label{sent:wrong2}
+	\textnormal{the \textbf{interest} in the \underline{shares} of the \textit{business} \textbf{rises} \dots}
+\end{equation}
+Figure \ref{fig:2c} shows that with an increasing number of noun interventions the error rate goes from 20.8\% (0 attractors) up to 73.6\% (4 attractors) which is close to randomly guessing the number of the verb. 
+
+%TODO: describe 2b_least in text and give implications
+
+\input{own_experiments}
+
+
+
+%----------------------------------------------------------------------------------------
+%	CONCLUSION
+%----------------------------------------------------------------------------------------
+\section{Conclusion and Future Work}
+\label{conclusion}
+
+
+Overall, we can share the conclusion of \cite{Linzen2016} that LSTMs are able to capture grammatical structures to some extend. Our model was able to learn to predict the correct number of verb/noun for most of the simplest cases. On more complex sentences, eg. adding intervening nouns or function words in between the subject and the verb it failed to do so. In the latter case we could observe that the model at least shows some sensitivity for syntactic information. Through the further analysis, of the models decisions in the simplest cases, we could find evidence for the assertion that the model just falls back to statistical properties of the training corpus, such as word frequencies and the ratio of plural versus singular words.
+
+
+For future work it would be interesting to perform the replication of the Linzen experiments on real world sentences rather than on artificially constructed ones. The sentences that we generated might be not semantically meaningful and could be syntactically more divers. It remains open whether our model would perform differently on those.
+
+An interesting aspect of working with LSTMs is to look into the embeddings and further investigate the internal state of the network rather than treating it like a black box. Looking at the activations of the LSTMs might give further insights in the weaknesses of the model and could lead to a better error analysis then by looking solely at the predictions. 
+
+To follow up on the experiments it would be also interesting to support the model with explicit syntactic rules in order to generalise instead of relying too much on statistical properties of the training corpus.
+
+
+
+
+
+% include your own bib file like this:
+%\bibliographystyle{acl}
+%\bibliography{naaclhlt2018}
+\bibliography{article}
+\bibliographystyle{aaai-named}
+
+\end{document}

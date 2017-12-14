@@ -1,0 +1,75 @@
+\section{Related Work}
+\label{related work}
+
+%Linzen 2016
+Our work builds on the results described in ~\citep{Linzen2016}.  
+We summarize this paper below.
+
+%%%% Research Question
+LSTMs are sequence models that can capture long distance statistical regularities,
+but do not have built-in hierarchical representations.
+Linzen et al. investigate whether LSTMs are able to capture
+dependencies that follow from syntactic structure. More specific,
+the paper investigates number agreement in English subject-verb dependencies
+as an example of a structure sensitive dependency.
+
+%%%% Experiments
+The paper compares the performance of LSTMs
+trained with an explicit grammatical target as training objective,
+as well as a more generic language model trained with the target to
+predict the next word. 
+The grammatical models had the following objectives:
+\textit{number prediction} is trained to predict the 
+number of the next verb without knowing the verb,
+\textit{verb inflection} is similar to number prediction
+but with the difference that the model knows the verb,
+for \textit{grammatical judgement} the network is asked
+to judge whether a sentence is grammatical correct, 
+without knowing the position of a possible incorrect
+verb.
+The models are trained on a corpus without syntactic annotations (Wikipedia).
+The models are evaluated on real sentences taken from this corpus
+that were sampled based on their grammatical complexity. 
+  
+%%%% Results
+All models achieved an overall error rate below 7\%. However,
+the explicitly trained models perform much better 
+(verb inflection 0.8\%, number prediction 0.83\%, grammatical judgement 2,5\%)
+compared to the language model (6.8\%). 
+The overall high accuracy for all models can be explained by
+the fact that most naturally occurring sentences are actually
+simple, that is, no intervening nouns between verb and subject.
+
+The differences between the models become more pronounced
+when evaluating them on grammatically complex sentences.
+The performance of the grammatically trained models
+degrades slowly, achieving error rates below 20\% even with
+four intervening nouns of opposite number (attractors).
+The language model at the other hand performs worse-than-chance
+on most complex cases. The worse-than-chance performance
+indicates that the intervening nouns actively confuse
+the language model. Repeating the experiment with a
+state of the art language model~\citep{Jozefowicz2016} does not
+change the picture, the state-of-the-art language model 
+performs poorly on complex sentences 
+compared to the explicitly supervised models.
+
+
+%%%% Introspection of the model
+The accuracy of the grammatically trained models strongly suggests
+that the model is sensitive to structural dependencies. To
+find additional support for syntactic sensitivity the authors
+inspected the inner workings of the number prediction model.
+Principal component analysis on embeddings of singular and plural nouns
+shows that the first principal component
+corresponds almost perfectly to the expected number of the noun,
+which suggests that the model learns these numbers very well.
+Analysis of activations in response to specific grammatical
+constructs reveals units that store relevant structural
+information such as the number of the main clause subject,
+the number of the most recent noun of the current phrase
+and the embedding status. 
+
+
+%%%% Conclusion
+The authors conclude that LSTMs can capture grammatical structure given targeted supervision; while the language modeling objective of predicting the next word is insufficient. They advice to supplement language modeling objectives with more explicit targets for tasks in which it is desirable to capture syntactic dependencies.
