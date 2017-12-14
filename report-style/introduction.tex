@@ -30,13 +30,17 @@ number agreement in noun-verb dependencies as an example.
 %such dependencies.
 Their results show that the language modeling objective by itself
 is not sufficient for learning structure-sensitive dependencies;
-and that more explicit supervision is required.
+and that a more explicit grammatical target is required.
 
 %%%%%%%%%%% Problem + Approach
 In this paper we investigate an LSTM language model
 in more detail to get a better insight into what 
 information these models actually encode.
-We consider statistic, syntactic and semantic information
+We consider statistic, syntactic and 
+semantic information~\footnote{
+Unfortunately the experiment was not completed
+because one of the team members quite the project.
+}
 and analyse how the model uses this information
 to establish number agreement. 
 We take an empirical approach.
@@ -53,9 +57,13 @@ This shows that our model is able to learn the
 plurality number for nouns and verbs.
 A detailed analysis of the errors made in simple cases
 showed that they could be explained partially by 
-statistics on the training data,
-i.e. the frequencies of nouns and 
-the frequency ratio of plural versus singular verbs.
+statistics on the training data.
+That is, we identified verbs with a strong 
+prediction bias towards
+either the plural or the singular form,
+and found a positive correlation with the
+frequency ratio between the plural and singular forms
+of those verbs in the training data.
 %
 
 As expected from ~\citep{Linzen2016}, our model performed 
@@ -63,7 +71,7 @@ worse-than-change on complex sentences with
 intervening nouns of opposite number.
 The additional challenge in this case is
 to identify the head of the subject 
-without being distracted by other 
+without being distracted by other, 
 structurally irrelevant nouns. 
 The head of the subject is typically implied 
 by the syntactic structure of a sentence;
@@ -71,22 +79,31 @@ e.g. the sentence ``The toys of the boy \underline{lay}''
 requires a plural verb, while the sentence
 ``The toys that the boy \underline{plays} with''
 calls for a singular verb.
+The function words `that' and `of' 
+provide the crucial information 
+regarding the plurality of the verb.
 We experimented with various syntactic templates
-to see if the model shows sensitivity to
+to see if our model shows sensitivity to
 syntactic structure.
 The results suggest a 
 modest sensitivity to syntactic information 
 exposed by function words. 
-\footnote{ 
-Semantic information can also help the model
-to identify the structurally relevant noun.
-For example, in the sentence ``The prices of the product ... [stabilize/stabilizes]'', prices are more likely to stabilize than products.
-Unfortunately, the planned experiment on semantic information was not carried out because one of the team members quite the project.} 
+%\footnote{ 
+%Semantic information can also help the model
+%to identify the structurally relevant noun.
+%For example, in the sentence ``The prices of the product ... [stabilize/%stabilizes]'', prices are more likely to stabilize than products.
+%Unfortunately, the planned experiment on semantic information was not carried out %because one of the team members quite the project.} 
 
 
 
-%\paragraph{Outline}
-%The remainder of this report is organized as follows \ldots
+\paragraph{Outline}
+The remainder of this paper is organized as follows:
+We first summarize \citep{Linzen2016} in Section \ref{related work}.
+Next, in Section \ref{replication}, we replicate 
+some of the experiments of this paper.
+We then describe our own experiments (Section \ref{own-experiments})
+and end with our conclusion and recommendations 
+for future work (Section \ref{conclusion}).
 
 %We first repeat the experiments from the linzen paper
 %on a language model trained on PTB corpus.
