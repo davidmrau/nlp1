@@ -1,15 +1,19 @@
 \section{Own Experiments}
 \label{own-experiments}
-To predict the correct number of a given verb,
-the language model should be able to
-1. identify the noun that is the head of the subject for the verb
-2. establish the number of the noun (non-trivial since no knowledge of -s postfix for plurals)
-3. establish the number of the given verb forms (also non-trivial).
+In order to predict the correct number of a given verb,
+the language model should first
+identify the noun that is the head of the subject for the verb,
+then decide on the number of that noun,
+and finally decide on the number of the given verb forms and
+establish agreement.
+The latter two are non-trivial since the model has no knowledge
+of morphological features such as the `s' as the postfix
+for plural nouns and singular verbs. 
 
-In the first sub section we investigate if our model is able to
+In the first subsection we investigate if our model is able to
 do this for simple cases with only a single noun in the prefix.
 %
-In the second sub section we investigate if our model can handle
+In the second subsection we investigate if our model can handle
 more complex cases with two nouns in the prefix,
 and what information it then uses to identify the head of the subject.
 
@@ -54,6 +58,13 @@ In order to get a better visual impression we sorted the verbs
 after their total plurality preference, i.e. the sums of the columns. 
 The rows were sorted in a similar manner, but each half separately in order to conserve the separation between singular (upper half) and plural (lower half) nouns. The resulting matrix is shown in Fig. \ref{fig:matrix_ratio}.
 
+    \begin{figure}[t]
+    \centering
+        \includegraphics[scale=0.5]{matrix_plot_ratio.pdf}
+        \label{fig:matrix_ratio}
+        \caption{Singularity/plurality ratio for 80 x 40 sentences (generated from the most frequent 40 nouns and verbs). The upper half contains the singular nouns (NN), the lower half contains the plural nouns(NNS). A red cell indicates a plural preference for a specific word/noun combination, whereas a blue cell indicates a singular preference. }
+    \end{figure}
+
 As we expected the majority of the verbs in the upper half of the matrix are predicted correctly to be singular with a high certainty. The same for the lower, plural half. Overall it can be said that around the horizontal centre 
 as well as at the vertical borders we can observe that there are specific 
 noun/verb combinations for which the model is rather uncertain and/or incorrect. 
@@ -82,13 +93,7 @@ Around the middle of the matrix we can observe a few nouns that are clearly pred
 To investigate the impact of noun frequencies in the training data on the plurality rate (and therefore on the error rate), we calculated the error rate for each noun and plotted it against the frequency of the same noun. We expected a high error rate for low frequent nouns. However, as Fig. \ref{fig:noun_freq_error} shows, we could not found clear evidence that a low frequency in the training data leads to wrong predictions of the model. Figure \ref{fig:noun_freq_error} shows that there are singular as well as plural nouns with a low count that are predicted correctly most of the times.
 
  
-    \begin{figure}
-    \centering
-        \includegraphics[scale=0.5]{matrix_plot_ratio.pdf}
-        \label{fig:matrix_ratio}
-        \caption{Singularity/plurality ratio for 80 x 40 sentences (generated from the most frequent 40 nouns and verbs). The upper half contains the singular nouns (NN), the lower half contains the plural nouns(NNS). A red cell indicates a plural preference for a specific word/noun combination, whereas a blue cell indicates a singular preference. }
-    \end{figure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+     %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
       %(or a blank line to force the subfigure onto a new line)
      \begin{figure}
      \centering
