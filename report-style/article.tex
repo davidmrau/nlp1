@@ -91,7 +91,7 @@ All experiments in this paper are performed using an LSTM model\footnote{
 \subsection{Singular and Plural Nouns}
 
 \textbf{Data:} 
-The language model was tested on lower case sentences that were generated from the Wall Street Journal section of the Penn Treebank \citep{Marcus1993}. Therefore, 40 nouns and verbs, that were amongst the most common and occur in the test corpus as well as in the language model's corpus, were extracted. Those words build the base for the sentence generation for the subsequent experiments. 
+The language model was tested on lower case sentences that were generated from the Wall Street Journal section of the Penn Treebank \citep{Marcus1993}. Therefore, 40 nouns and verbs that were commonly used in the corpus, were extracted. Those words build the base for the sentence generation for the subsequent experiments. 
 
 \textbf{Model evaluation:} In order to evaluate the performance of our model, we query it with sentences containing both, the plural (\ref{sent:wrong}) and the singular (\ref{sent:right}) mode of the verb: 
 \begin{align}
@@ -102,14 +102,14 @@ The language model was tested on lower case sentences that were generated from t
 	\label{sent:right}
 	\textnormal{the producer  \textbf{plans}}
 \end{align}
-Following the experiments in \citep{Linzen2016} we examine the models error rate predicting the number of a verb. That is, the model receives the words leading up to the verb and needs to decide between the singular and plural forms of a particular verb.
+Following the experiments in \citep{Linzen2016} we examine the models error rate predicting the number of a verb. That is, the model receives the words leading up to the verb and needs to decide between the singular and plural form of a particular verb.
 %We examine sentences with a given number of nouns of opposite number intervening %between the subject and the verb. 
 
 We first test how the model's ability to predict the number of the verb is affected by none and one intervening noun, respectively. If there is an intervening noun we keep track whether the number of the noun differs from the number of the subject. If it does so it is referred to as an \textit{agreement attractor}. In this way we can easily spot whether the model makes use of the most obvious heuristic: choosing the the number of the verb only in dependence of the last intervening noun in the sentence.
     \begin{figure}
     \centering
         \includegraphics[scale=0.5]{2b.pdf}
-            	\caption{Error rates of the language model plotted against: presence and number of last intervening noun}
+            	\caption{Error rates of the language model plotted against the presence and number of the last intervening noun}
         \label{fig:2b}
     \end{figure}
 As depicted in Figure \ref{fig:2b} our model performs slightly worse for plural subjects (17.7\% error rate) than for singular (15,2\% error rate) when no intervening nouns are present. An intervening noun with the same number as the subject causes a slight increase of the error rate to 18.6\% and a decrease to 15.1\%, respectively. However, when the number of the subject differs from the intervening noun the error rates increased dramatically; in singular subjects to 57,9\% in plural subjects to 60,8\%. The fact that it performs worse than predicting the number by chance implies that the model indeed predicts the number of the verb in dependence of the last noun and therefore fails to find the dependency between verb and noun.
@@ -119,9 +119,11 @@ As depicted in Figure \ref{fig:2b} our model performs slightly worse for plural 
 
 In the following we examine the error rate when adding multiple attractors to the sentence. In order to avoid the model being distracted by an intervening noun with the same number as the subject we only insert nouns with the same number. Linzen et al.~\citep{Linzen2016} refer to such as  \textit{ dependencies with homogeneous intervention}. Consider the following example sentences:
 \begin{equation}
+	\label{sent:right2}
 	\textnormal{the \textbf{interest} in the \underline{shares} of the \underline{businesses} \textbf{rises} }
 \end{equation}
 \begin{equation}
+	\label{sent:wrong2}
 	\textnormal{the \textbf{interest} in the \underline{shares} of the \textit{business} \textbf{rises} }
 \end{equation}
 In (\ref{sent:right2}) the underlined represent homogeneous interventions, whereas in (\ref{sent:wrong2}) the number of the intervening nouns differ. The bold words highlight the dependency between noun and corresponding verb.
