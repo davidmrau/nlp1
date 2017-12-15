@@ -102,12 +102,21 @@ We see that with an increasing plurality rate the plurality preference rate tend
 \subsubsection{Noun Statistics}
 
 There are also nouns which show preference for the wrong number and nouns
-that seem to follow the preference of the verbs, 
+that seem to follow the plurality preference of the verbs, 
 rather than determining the preference with their own plurality number.
-Around the middle of the matrix we can observe a few nouns that are clearly predicted wrong in most cases. The singular noun `income` (column 39) with a plurality rate of 0.15 is mostly predicted plural, whereas for example in columns 40 to 44 the plural nouns `weeks` (0.9), `months` (0,9), `years` (0,85), and `days` (0,7), are incorrectly predicted singular most of the times.
+Around the middle of the matrix we can observe a few nouns that are clearly predicted wrong in most cases. The singular noun `income` (column 39) with a plurality rate of 0.15 is mostly predicted plural, whereas in columns 40 to 45 the plural nouns `weeks` (0.9), `months` (0,9), `years` (0,85), `days` (0,7), `times' (0.65), and `hours' (0.53) are incorrectly predicted singular most of the times. Notice that these incorrectly predicted
+plural nouns are remarkably similar.
 
-To investigate the impact of noun frequencies in the training data on the plurality rate (and therefore on the error rate), we calculated the error rate for each noun and plotted it against the frequency of the same noun. We expected a high error rate for low frequent nouns. However, as Fig. \ref{fig:noun_freq_error} shows, we could not found clear evidence that a low frequency in the training data leads to wrong predictions of the model. Figure \ref{fig:noun_freq_error} shows that there are singular as well as plural nouns with a low count that are predicted correctly most of the times.
-
+To investigate the impact of noun frequencies in the training data on the plurality 
+preference rate of the nouns (and therefore on their error rate), 
+we calculated the error rate for each noun and plotted it against the frequency of the same noun. 
+We expected a high error rate for low frequent nouns. 
+However, as Fig. \ref{fig:noun_freq_error} shows, we could not found clear evidence 
+that a low frequency in the training data leads to wrong predictions of the model. 
+Figure \ref{fig:noun_freq_error} shows that there are singular as well as plural nouns 
+with a low count that are predicted correctly most of the times.
+Furthermore, the frequencies of the mis-counted nouns mentioned before
+range from 123 to 1241 which is also not exceptional low.
  
          \begin{figure}
           \centering
@@ -117,11 +126,19 @@ To investigate the impact of noun frequencies in the training data on the plural
     \end{figure}
     
     
-The previous experiment neglects the fact that even though a word is frequent in the corpus it does not neccessarily occur frequent as the subject of a training sentence. For those cases, the model will presumably 
-have more difficulty to establish their numbers correctly. We manually inspected sentences in the training data in which
-the nouns with a high error rate occured. We saw indeed that those nouns were rarely the subject of a sentence. As a future experiment we suggest to use a parser
-in order to only count the nouns when they act as the subject of a sentence. 
-
+The previous experiment neglects the fact that even though a word is frequent in the corpus 
+it does not neccessarily occur frequently as the subject of a training sentence. 
+For those cases, the model will presumably 
+have more difficulty to establish their numbers correctly;
+although it could have learned them indirectly from other syntactic
+properties, for example from the occurences of the plural noun words
+with a plural count word (two weeks) or from their occurrence 
+with and without a determiner.
+We manually inspected sentences in the training data in which
+the nouns with a high error rate occured. We saw that those nouns were 
+indeed rarely the subject of a sentence. As a future experiment we suggest 
+to use a parser in order to only count the nouns when 
+they act as the subject of a sentence. 
 
 \subsection{Noun-Verb Agreement in Complex Cases}
 
