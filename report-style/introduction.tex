@@ -15,8 +15,8 @@ compared to feed-forward networks~\citep{Mikolov2010,Sundermeyer2013}.
 
 %%%%%%%%%%% Context: What do we already know
 Regularities in natural language are often sensitive to syntactic structure.
-RNNs and LSTMs are sequence models that do not have explicit
-structural representations,
+RNNs and LSTMs are sequence models that do not 
+explicitly incorporate syntactic structure;
 capturing such dependencies is therefore challenging.
 Linzen et al.~\cite{Linzen2016} investigate the capability
 of LSTMs to learn syntactic dependencies, taking
@@ -93,6 +93,9 @@ exposed by function words.
 %For example, in the sentence ``The prices of the product ... [stabilize/%stabilizes]'', prices are more likely to stabilize than products.
 %Unfortunately, the planned experiment on semantic information was not carried out %because one of the team members quite the project.} 
 
+The main contribution of this paper is that it provides insights
+into what information LSTM language models actually
+use to determine the number of a predicted verb.
 
 
 \paragraph{Outline}
