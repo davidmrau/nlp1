@@ -320,64 +320,71 @@ information exposed by function words.
 
 \subsubsection{Semantic Information}
 
-We now look at semantic clues, i.e. companies
-are more likely to produce than employees.
-We investigate if the model is able to establish
-number agreement between the verb and the semantic related noun,
-ignoring the non-semantic related attractor noun.
+In this section we analyse the models sensitivity
+to semantic clues, e.g. the price is more likely
+to stabilize than the products in the sentence
+``The price of the products ... [stabilizes/stabilize]''.
+The semantic association between the noun `price' and the
+verb `stabilizes' can help the model to identify
+the word `price' as the head of the subject,
+ignoring the semantically non-related attractor noun.
   
-1. TEST DATA:
-We construct a testset (100+ sentences) consisting of pairs with singular and plural prefixes, in the following format  
+% TEST DATA:
+We construct a testset consisting of pairs with singular and plural prefixes, in the following format  
 ``The NN of the NNS ...[VBZ/VBP]'' and
-``The NNS of the NN ...[VBZ/VBP]'' 
+``The NNS of the NN ...[VBZ/VBP]'', 
 whereby the head of the subject (the first noun)
 is semantically related to the verb, while the attractor (the second noun)
-is randomly picked. An example is:
-``The prices of the employee ...[stabilizes/stabilize]'' and 
-``The price of the employees ...[stabilizes/stabilize]''.
+is randomly selected. 
+In addition we construct a comparison set consisting of prefixes
+build from the same verb and attractor noun,
+but with the difference that the subject noun is also randomly selected.
+Thus, for the sentences in the comparison set both nouns
+are most likely to be not semantically associated to the verb.
+We select strongly associated noun-verb pairs from the corpus,
+using PPMI\footnote{
+\url{https://en.wikipedia.org/wiki/Pointwise_mutual_information\#Applications}
+%\url{https://en.wikipedia.org/wiki/Pointwise_mutual_information#Applications}
+} as a metric to measure association between nouns and verbs. 
 
-In addition we construct a comparison set consisting of the same prefixes
-(same verb and attractor noun),
-but with the difference that the first noun is also randomly picked and
-therefore most likely not semantically related. Example:
-``The newspapers of the employee ...[stabilizes/stabilize]'' and 
-``The newspaper of the employees ...[stabilizes/stabilize]''.
-
-
-EXPERIMENT:
-Evaluate our model on the constructed testset and on the comparison set.
-If the model scores significantly better on the testset
-then it shows sensitivity to semantic clues.
+%EXPERIMENT:
+We compare the performance of our model on
+the constructed testset with its performance
+on the comparison set.
+If the error rate on the testset is significantly
+lower than the error rate on the comparison set,
+then we conclude that the model shows sensitivity to semantic clues\footnote{Unfortunately the experiment is not completed
+due to the fact that one of our team members quit the project.}.
 
 %(remark: we can repeat the experiment with the nouns interchanged and check that we %score worse now,
 %e.g. "The employee that the prices ... [stabilize/stabilizes]" 
 %In that case syntax and semantics are inconsistent)
 
-HOW TO FIND CO-OCCURRENCE RATIOS
-We use PMI to measure associations between verbs and nouns.
+%HOW TO FIND CO-OCCURRENCE RATIOS
+%We use PMI to measure associations between verbs and nouns.
 %(https://en.wikipedia.org/wiki/Pointwise_mutual_information#Applications)
 
 
-\begin{itemize}
-\item find all nouns (NN) and verbs (VBZ) in a tagged corpus 
-(sec02-21.gold.tagged).
-(pick a random selection if all is too much
-but make sure you are not only looking at
-frequent verbs since they tend to be general like 'is/are'
-instead of specific like 'stabilize')
-\item  build a matrix with nouns as rows and columns as verbs
-\item  fill entries with Count('noun and verb co-occur in a sentence')
-i.e. loop over all sentences and add one if noun and verb exists in sentence
-(or use skip grammar, but only count noun that appears before verb, see also lab4)
-\item  Also keep track of the total occurrences for the Verbs and nouns
-\item replace each enty by the PMI calculated from the 
-co-occurrence count, the total occurences of the noun, and the occurences
-of the verb
-\item select for each column the entry with the highest score(s)
-(you may ignore very general verbs like is/are)
-\end{itemize}
+%\begin{itemize}
+%\item find all nouns (NN) and verbs (VBZ) in a tagged corpus 
+%(sec02-21.gold.tagged).
+%(pick a random selection if all is too much
+%but make sure you are not only looking at
+%frequent verbs since they tend to be general like 'is/are'
+%instead of specific like 'stabilize')
+%\item  build a matrix with nouns as rows and columns as verbs
+%\item  fill entries with Count('noun and verb co-occur in a sentence')
+%i.e. loop over all sentences and add one if noun and verb exists in sentence
+%(or use skip grammar, but only count noun that appears before verb, see also lab4)
+%\item  Also keep track of the total occurrences for the Verbs and nouns
+%\item replace each enty by the PMI calculated from the 
+%co-occurrence count, the total occurences of the noun, and the occurences
+%of the verb
+%\item select for each column the entry with the highest score(s)
+%(you may ignore very general verbs like is/are)
+%\end{itemize}
 
-Remark: can be learned from tagged data set, no need to look at training data
+%Remark: can be learned from tagged data set, no need to look at training data
 
 
 
