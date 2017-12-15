@@ -2,14 +2,32 @@
 
 \noindent 
 
-% main idea
-- language model, number agreement
-
-% key findings
-- able to learn the numbers of nouns and verbs
-- modest sensitivity to syntactic structure
-
+LSTM models have become increasingly popular for
+the task of language modeling, mostly
+because of their capability to capture long-distance
+dependencies. 
+Dependencies in natural language are often sensitive
+to syntactic structure;
+capturing such dependencies is challenging for LSTM models 
+since they do not explicitly incorporate syntactic structure.
+In this paper we focus on noun-verb number agreement
+as an example of a syntactic dependency.
+We investigate the effect of
+statistic, syntactic and semantic information
+on the number prediction of the model.
+Our results show that the model is able
+to learn the number for most nouns and verbs
+using statistic regularities,
+we also found evidence for a modest sensitivity
+to syntactic structure. 
 The main contribution of this paper is that it provides insights
 into what information LSTM language models actually
 use to determine the plurality number of a predicted verb.
 \end{abstract}
+
+% main idea
+%- language model, number agreement
+
+% key findings
+%- able to learn the numbers of nouns and verbs
+%- modest sensitivity to syntactic structure
