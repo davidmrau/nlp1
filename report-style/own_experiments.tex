@@ -142,9 +142,9 @@ they act as the subject of a sentence.
 
 \subsection{Noun-Verb Agreement in Complex Cases}
 
-In Section \ref{replication} we analysed the performance of the model
+In Section \ref{replication-attractors} we analysed the performance of the model
 on complex sentences, containing one or more 
-nouns.
+intervening nouns of opposite number.
 The results show that the model is very
 sensitive to the most recent noun,
 performing worse-than-chance with only one single attractor.
@@ -164,24 +164,25 @@ of opposite number.
 %%%%% OBJECTIVE
 Function words such as `that' or `of' carry 
 important information about the syntactic structure of a sentence.
-In this Section we investigate if the model
+We investigate if the model
 uses this information to establish number agreement
-for complex sentences.
+with the structurally relevant noun, ignoring
+other irrelevant nouns that occur in a complex sentence.
 
 %%%% TEST DATA
 We generated sets of sentence prefixes using 
 different syntactic templates.
-An example is ``The \_ of the \_''
+An example is ``The \_ of the \_ \ldots''
 We instantiate these templates by randomly
 picking two nouns and a verb 
-from a set of frequently used nouns and verbs. 
+from a set of frequently occuring nouns and verbs. 
 Each combination of nouns and verbs instantiates
 two prefixes that differ by their plurality.
 For example ``The company of the governments''
 and ``The companies of the government'',
 with the option to choose between the verb forms
 `know' and `knows'.
-Since the nouns and verbs are randomly picked,
+Since the nouns and verbs are randomly selected,
 the generated prefixes 
 are typically not semantically
 meaningful.
@@ -190,97 +191,14 @@ We generated 2 x 1000 sentences per template,
 for a total of 11 templates.
 The sentences for each template are constructed using the same
 noun and verb combinations.
-We defined 7 templates for which the first noun is 
-the head of the subject (table \ref{tab:attractor_templates}),
-while 4 templates have the second noun as the head of the subject
+We defined seven templates for which the most recent noun is 
+not the head of the subject (table \ref{tab:attractor_templates}),
+whereas four templates do have the second noun as the head of the subject
 (table \ref{tab:lastnoun_templates}).
-The templates were defined after a manual inspection
+The templates were defined after manual inspection
 of sentences from the corpus.
 
-%%%% EXPERIMENT:
-We evaluate how the model responds to the generated test inputs.
-That is, for each test prefix we let the model decide between 
-the singular and plural form of the given verb. 
-We measure the error rate for each template.
-However, instead of showing the error rates we
-show how much the language model tends to agree with the most recent noun.
-This corresponds to the error rate for the templates in table \ref{tab:attractor_templates},
-while it corresponds to accuracy for the templates in table \ref{tab:lastnoun_templates}.
-Showing the `last noun agreement rate' makes it easier
-to compare the behavior of the model for different templates.
-
-%%%% ANALYSIS:
-The results are shown in Figure \ref{fig:last_noun_rates},
-using green and red colors to indicate if 
-the last noun is actually the head of the subject (green)
-or not (red). 
-%
-We see that all bars are above the 0.5 rate,
-which shows that the model is most
-likely to agree with the last noun,
-even in cases where this is syntactically incorrect. 
-%
-We also see that the red bars are slightly
-lower than the green bars,
-0.67 compared to 0.79 on average.
-This shows that the model is even more likely
-to agree with the last noun if this is
-also syntactically correct.
-This suggests that the model has 
-at least some sensitivity
-to syntactic information carried by function words.
-%
-
-%
-We further discuss two special cases,
-namely the first red bar (T1) and 
-the last green bar (T11).
-T1, ``the \_ and the \_ '', is a special case because it 
-actually contains two singular nouns
-instead of one singular and one plural noun. 
-The predicted verb should be plural because of the
-conjunction word `and'.
-The existence of two singular nouns 
-makes it hard for the model
-to pick the plural verb,
-which could explain the high error rate
-for T1 in Figure \ref{fig:last_noun_rates}.
-%
-T11 uses different templates for the singular 
-(the \_ 's \_ ) and the plural (the \_' \_) possessive form.
-The last green bar in Figure \ref{fig:last_noun_rates} shows the average result.
-We suspect that the relatively low accuracy
-in this case might be explained by the infrequent
-occurrence of the plural possessive form in written text.
-Indeed, a closer inspection of the numbers showed that
-the singular template had an accuracy
-of 0.77 (compared to 0.71 for all singular prefixes), 
-while the accuracy of the plural template
-was lower, namely 0.66 (compared to 0.63 overall for plural prefixes).
-%
-
-%%%% DISCUSSION / CONCLUSION:
-We conclude that, although the model 
-performs poorly on syntactically complex sentences it
-still shows some sensitivity for syntactic 
-information exposed by function words. 
-
-
-\begin{figure}
-    \centering
-\includegraphics[scale=0.5]{screenshot-syntactic-templates} 
-\caption{Preference rates for agreement to the last noun.
-The colors indicate whether this is syntactically correct (green)
-or incorrect (red).
-}
-%TODO: save picture instead of making screenshot 
-%TODO title Templates below
-\label{fig:last_noun_rates}
-\end{figure}
-
-
-
-\begin{table}[t] 
+\begin{table}
 \parbox{\linewidth}{
 \centering
 \begin{tabular}{ l l r }
@@ -299,7 +217,7 @@ is opposite to the number of the last noun}
 \end{table}
 
 
-\begin{table}[t] 
+\begin{table}
 \parbox{\linewidth}{
 \centering
 \begin{tabular}{ l l r }
@@ -316,6 +234,88 @@ corresonds to the number of the last noun}
 \label{tab:lastnoun_templates}
 }
 \end{table}
+
+
+%%%% EXPERIMENT:
+We evaluate how the model responds to the generated test inputs.
+That is, for each test prefix we let the model decide between 
+the singular and plural form of the given verb. 
+We measure the error rate for each template.
+However, instead of showing the error rates, we
+show how much the language model tends to agree with the most recent noun.
+This corresponds to the error rate for the templates in table \ref{tab:attractor_templates},
+while it corresponds to accuracy for the templates in table \ref{tab:lastnoun_templates}.
+Showing the `last noun agreement rate' makes it easier
+to compare the behavior of the model for different templates.
+
+\begin{figure}
+    \centering
+\includegraphics[scale=0.5]{screenshot-syntactic-templates} 
+\caption{Last noun agreement rates for different templates.
+The colors indicate whether this is syntactically correct (green)
+or incorrect (red).
+}
+%TODO: save picture instead of making screenshot 
+%TODO title Templates below
+\label{fig:last_noun_rates}
+\end{figure}
+
+
+%%%% ANALYSIS:
+The results are shown in Figure \ref{fig:last_noun_rates},
+using green and red colors to indicate if 
+the last noun is actually the head of the subject (green)
+or not (red). 
+%
+We see that all bars are above the 0.5 rate,
+which shows that the model is most
+likely to agree with the most recent noun,
+even in cases where this is syntactically incorrect. 
+%
+We also see that the red bars are slightly
+lower than the green bars,
+0.67 compared to 0.79 on average.
+This shows that the model is a bit less likely
+to agree with the last noun if this is
+syntactically incorrect.
+This suggests that the model has 
+at least some sensitivity
+to syntactic information carried by function words.
+%
+
+%
+We further discuss two special cases,
+namely the first red bar (T1) and 
+the last green bar (T11).
+T1, ``the \_ and the \_ '', is a special case because it 
+actually contains two singular nouns
+instead of one singular and one plural noun. 
+The predicted verb should be plural because of the
+conjunction word `and'.
+The existence of two singular nouns 
+apparently makes it harder for the model
+to pick the plural verb,
+which could explain the high error rate
+for T1 in Figure \ref{fig:last_noun_rates}.
+%
+The other special case, T11, uses different templates for the singular 
+(the \_ 's \_ ) and the plural (the \_' \_) possessive form.
+The last green bar in Figure \ref{fig:last_noun_rates} shows the average result.
+We suspect that the relatively low accuracy
+in this case might be explained by the infrequent
+occurrence of the plural possessive form in written text.
+Indeed, a closer inspection of the numbers showed that
+the singular template had an accuracy
+of 0.77 (compared to 0.71 for all singular prefixes), 
+while the accuracy of the plural template
+was lower, namely 0.66 (compared to 0.63 overall for plural prefixes).
+%
+
+%%%% DISCUSSION / CONCLUSION:
+We conclude that, although the model 
+performs poorly on syntactically complex sentences it
+still shows some sensitivity for syntactic 
+information exposed by function words. 
 
 
 \subsubsection{Semantic Information}
